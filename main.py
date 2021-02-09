@@ -4,26 +4,27 @@ import pygame as pg
 import sys, pygame
 pygame.init()
 
-size = width, height = 320, 240
+size = width, height = 900, 600
 speed = [1, 1]
 black = 0, 0, 0
 
 screen = pygame.display.set_mode(size)
+pygame.display.set_caption('Nicholas Cage')
 
 ball = pygame.image.load("head.png")
-ballrect = ball.get_rect()
+ballrect = pygame.Rect(100, 100, 256, 256)
 
 while 1:
+    pos = 0
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
-
-    ballrect = ballrect.move(speed)
-    if ballrect.left < 0 or ballrect.right > width:
-        speed[0] = -speed[0]
-    if ballrect.top < 0 or ballrect.bottom > height:
-        speed[1] = -speed[1]
-
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pos = pygame.mouse.get_pos()
+            ballrect = pygame.Rect(pos[0]-128, pos[1]-128, 256, 256)
     screen.fill(black)
+    font = pygame.font.SysFont(None, 24)
+    img = font.render('Click somewhere on the screen. DO IT!!11!', True, (100, 100, 100))
+    screen.blit(img, (20, 20))
     screen.blit(ball, ballrect)
-    pygame.display.flip()
+    pygame.display.update()
 
