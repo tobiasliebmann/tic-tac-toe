@@ -6,6 +6,28 @@ import math
 
 import numpy as np
 
+
+def game_over_screen(message):
+    """
+
+    :return:
+    """
+    screen.fill(black)
+    # apply it to text on a label
+    label = my_font.render(message, True, (255, 0, 0))
+    # put the label object on the screen at point x=100, y=100
+    screen.blit(label, (width/2, height/2))
+
+
+def quit_game():
+    """
+
+    :return:
+    """
+    pygame.quit()
+    sys.exit()
+
+
 def position_test(input_pos, test_dimension):
     """
 
@@ -37,22 +59,23 @@ def win_check(matrix):
     :param matrix:
     :return:
     """
+    trafo_matrix = np.array([[0, 0, 1], [0, 1, 0], [1, 0, 0]])
     transposed_matrix = matrix.T
     for x in matrix:
-        if x == np.array([1, 1, 1]):
+        total = np.sum(x)
+        if total == 3:
             return 1
+        if total == -3:
+            return -1
     for x in transposed_matrix:
-        if x == [1, 1, 1]:
+        total = np.sum(x)
+        if total == 3:
             return 1
-    if np.trace(matrix) == 3 or np.trace(transposed_matrix) == 3:
+        if total == -3:
+            return -1
+    if np.trace(matrix) == 3 or np.trace(np.matmul(trafo_matrix, matrix)) == 3:
         return 1
-    for x in matrix:
-        if x == [-1, -1, -1]:
-            return -1
-    for x in transposed_matrix:
-        if x == [-1, -1, -1]:
-            return -1
-    if np.trace(matrix) == -3 or np.trace(transposed_matrix) == -3:
+    if np.trace(matrix) == -3 or np.trace(np.matmul(trafo_matrix, matrix)) == -3:
         return -1
 
 
@@ -63,9 +86,15 @@ pygame.init()
 # The matrix is initialized with only zeros.
 state_matrix = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
 
-player1_flag = True
+game_state = 1
 
-size = width, height = 800, 800
+player_turn = 1
+
+player1_win_flag = False
+player2_win_flag = False
+draw_flag = False
+
+size = width, height = 1000, 1000
 black = 0, 0, 0
 
 outer_circle_radius = width/7
@@ -76,48 +105,69 @@ pygame.display.set_caption('Tic-Tac-Toe')
 
 screen.fill(black)
 
-while 1:
-    pygame.draw.line(screen, (255, 255, 255), (0, height / 3), (width, height / 3))
-    pygame.draw.line(screen, (255, 255, 255), (0, 2 * height / 3), (width, 2 * height / 3))
-    pygame.draw.line(screen, (255, 255, 255), (width / 3, 0), (width / 3, height))
-    pygame.draw.line(screen, (255, 255, 255), (2 * width / 3, 0), (2 * width / 3, height))
+# pick a font you have and set its size
+my_font = pygame.font.SysFont("Comic Sans MS", 30)
+retry_button = my_font.render("Click here for new game.", True, (0, 255, 255))
 
+# Draw 3x3-grid for tic-tac-toe
+pygame.draw.line(screen, (255, 255, 255), (0, height / 3), (width, height / 3))
+pygame.draw.line(screen, (255, 255, 255), (0, 2 * height / 3), (width, 2 * height / 3))
+pygame.draw.line(screen, (255, 255, 255), (width / 3, 0), (width / 3, height))
+pygame.draw.line(screen, (255, 255, 255), (2 * width / 3, 0), (2 * width / 3, height))
+
+while 1:
     pos = pygame.mouse.get_pos()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            line_start_x = position_test(pos[0], width)
-            line_start_y = position_test(pos[1], height)
-            column_index = math.trunc(3*pos[0]/width)
-            row_index = math.trunc(3*pos[1]/height)
+        if game_state == 1:
+            if event.type == pygame.MOUSEBUTTONDOWN:
 
-            if player1_flag and click_test(pos, state_matrix):
-                pygame.draw.line(screen, (0, 255, 0), (line_start_x, line_start_y),
-                                 (line_start_x + height/3, line_start_y + height/3))
-                pygame.draw.line(screen, (0, 255, 0), (line_start_x, line_start_y + height/3),
-                                 (line_start_x + width/3, line_start_y))
-                player1_flag = False
-                state_matrix[row_index][column_index] = 1
-                if win_check(state_matrix) == 1:
-                    print("Player 1 is the winner")
-                    pygame.quit()
-                    sys.exit()
-                print(state_matrix)
-            elif not player1_flag and click_test(pos, state_matrix):
-                center = (line_start_x + width/6, line_start_y + height/6)
-                pygame.draw.circle(screen, (0, 0, 255), center, outer_circle_radius)
-                pygame.draw.circle(screen, black, center, inner_circle_radius)
-                player1_flag = True
-                state_matrix[row_index][column_index] = -1
-                if win_check(state_matrix) == -1:
-                    print("Player 2 is the winner")
-                    pygame.quit()
-                    sys.exit()
-                print(state_matrix)
-            else:
-                print("This move is not possible")
-                print(state_matrix)
+                line_start_x = position_test(pos[0], width)
+                line_start_y = position_test(pos[1], height)
+                column_index = math.trunc(3*pos[0]/width)
+                row_index = math.trunc(3*pos[1]/height)
+
+                if player_turn % 2 != 0 and click_test(pos, state_matrix):
+                    print("Im here.")
+                    pygame.draw.line(screen, (0, 255, 0), (line_start_x, line_start_y), (line_start_x + height/3, line_start_y + height/3))
+                    pygame.draw.line(screen, (0, 255, 0), (line_start_x, line_start_y + height/3), (line_start_x + width/3, line_start_y))
+                    print("now Im here.")
+                    state_matrix[row_index][column_index] = 1
+                    if win_check(state_matrix) == 1:
+                        game_state = 2
+                        player1_win_flag = True
+                        pygame.time.delay(1000)
+                    player_turn = player_turn + 1
+                    print(state_matrix)
+                    print(player_turn)
+                elif player_turn % 2 == 0 and click_test(pos, state_matrix):
+                    center = (line_start_x + width/6, line_start_y + height/6)
+                    pygame.draw.circle(screen, (0, 0, 255), center, outer_circle_radius)
+                    pygame.draw.circle(screen, black, center, inner_circle_radius)
+                    state_matrix[row_index][column_index] = -1
+                    if win_check(state_matrix) == -1:
+                        game_state = 2
+                        player2_win_flag = True
+                        pygame.time.delay(1000)
+                    player_turn = player_turn + 1
+                    print(state_matrix)
+                    print(player_turn)
+                elif player_turn >= 9:
+                    game_state = 2
+                    draw_flag = True
+                    pygame.time.delay(1000)
+                else:
+                    print(state_matrix)
+                    print("You cant place your marker here.")
+        if game_state == 2:
+            if player1_win_flag:
+                game_over_screen("X wins.")
+            elif player2_win_flag:
+                game_over_screen("o wins.")
+            elif draw_flag:
+                game_over_screen("Draw.")
+#        elif event.type == pygame.MOUSEBUTTONDOWN and game_state == 2:
     pygame.display.update()
-    pygame.time.Clock().tick(5)
+    pygame.time.delay(5)
