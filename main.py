@@ -134,10 +134,8 @@ while 1:
                 column_index = math.trunc(3*pos[0]/width)
                 row_index = math.trunc(3*pos[1]/height)
                 if player_turn % 2 != 0 and click_test(pos, state_matrix):
-                    print("Im here.")
                     pygame.draw.line(screen, (0, 255, 0), (line_start_x, line_start_y), (line_start_x + height/3, line_start_y + height/3))
                     pygame.draw.line(screen, (0, 255, 0), (line_start_x, line_start_y + height/3), (line_start_x + width/3, line_start_y))
-                    print("now Im here.")
                     state_matrix[row_index][column_index] = 1
                     if win_check(state_matrix) == 1:
                         game_state = 2
