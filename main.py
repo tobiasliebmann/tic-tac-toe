@@ -4,6 +4,7 @@ import pygame
 
 import math
 
+import numpy as np
 
 def position_test(input_pos, test_dimension):
     """
@@ -27,7 +28,32 @@ def click_test(click_pos, matrix):
     :param matrix:
     :return:
     """
-    return 0 == matrix[math.trunc(3*click_pos[0]/width)][math.trunc(3*click_pos[1]/height)]
+    return 0 == matrix[math.trunc(3*click_pos[1]/height)][math.trunc(3*click_pos[0]/width)]
+
+
+def win_check(matrix):
+    """
+
+    :param matrix:
+    :return:
+    """
+    transposed_matrix = matrix.T
+    for x in matrix:
+        if x == np.array([1, 1, 1]):
+            return 1
+    for x in transposed_matrix:
+        if x == [1, 1, 1]:
+            return 1
+    if np.trace(matrix) == 3 or np.trace(transposed_matrix) == 3:
+        return 1
+    for x in matrix:
+        if x == [-1, -1, -1]:
+            return -1
+    for x in transposed_matrix:
+        if x == [-1, -1, -1]:
+            return -1
+    if np.trace(matrix) == -3 or np.trace(transposed_matrix) == -3:
+        return -1
 
 
 pygame.init()
@@ -35,7 +61,7 @@ pygame.init()
 # This matrix keeps track of the state of system i.e. which player has occupied which field
 # A value of 1 stands for the player 1, -1 equates to player 2 and 0 means the field is not occupied.
 # The matrix is initialized with only zeros.
-state_matrix = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+state_matrix = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
 
 player1_flag = True
 
@@ -64,8 +90,8 @@ while 1:
         if event.type == pygame.MOUSEBUTTONDOWN:
             line_start_x = position_test(pos[0], width)
             line_start_y = position_test(pos[1], height)
-            row_index = math.trunc(3*pos[0]/width)
-            column_index = math.trunc(3*pos[1]/height)
+            column_index = math.trunc(3*pos[0]/width)
+            row_index = math.trunc(3*pos[1]/height)
 
             if player1_flag and click_test(pos, state_matrix):
                 pygame.draw.line(screen, (0, 255, 0), (line_start_x, line_start_y),
@@ -74,6 +100,10 @@ while 1:
                                  (line_start_x + width/3, line_start_y))
                 player1_flag = False
                 state_matrix[row_index][column_index] = 1
+                if win_check(state_matrix) == 1:
+                    print("Player 1 is the winner")
+                    pygame.quit()
+                    sys.exit()
                 print(state_matrix)
             elif not player1_flag and click_test(pos, state_matrix):
                 center = (line_start_x + width/6, line_start_y + height/6)
@@ -81,6 +111,10 @@ while 1:
                 pygame.draw.circle(screen, black, center, inner_circle_radius)
                 player1_flag = True
                 state_matrix[row_index][column_index] = -1
+                if win_check(state_matrix) == -1:
+                    print("Player 2 is the winner")
+                    pygame.quit()
+                    sys.exit()
                 print(state_matrix)
             else:
                 print("This move is not possible")
