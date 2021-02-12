@@ -126,21 +126,21 @@ class State:
         if trace == 3*self.player2_marker or trafo_trace == 3*self.player2_marker:
             self.set_player2_win_flag(True)
 
-    def init_game_state(self):
+    def init_gaming_state(self):
         """
         Initializes the state corresponding to the start of a game.
         :return: -
         """
-        self.set_state(1)
+        self.set_state(self.gaming_state)
         self.set_turn(1)
         self.set_state_matrix(np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]))
         self.set_player1_win_flag(False)
         self.set_player2_win_flag(False)
         self.set_draw_flag(False)
 
-    def add_new_state(self, row_index, column_index):
+    def add_new_marker(self, row_index, column_index):
         """
-        Defines the actions that are performed, when the screen is clicked and a new graphic is add to the tic-tac-toe
+        Defines the actions that are performed, when the screen is clicked and a new graphic is added to the tic-tac-toe
         grid.
         :return:
         """

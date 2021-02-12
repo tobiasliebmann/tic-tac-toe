@@ -11,6 +11,10 @@ class Graphics:
     screen_size = (screen_height, screen_width)
     screen = pg.display.set_mode(screen_size)
 
+    game_font = None
+
+    replay_button = None
+
     game_state = sm.State()
 
     cross_length = screen_width / 3
@@ -20,13 +24,14 @@ class Graphics:
 
     white = (255, 255, 255)
     black = (0, 0, 0)
-    read = (255, 0, 0)
+    red = (255, 0, 0)
     green = (0, 255, 0)
     blue = (0, 0, 255)
 
     def __init__(self):
         pg.init()
-        self.game_state.init_game_state()
+        self.game_font = pg.font.SysFont("Comic Sans MS", 30)
+        self.game_state.init_gaming_state()
 
     def init_visuals(self):
         """
@@ -95,7 +100,7 @@ class Graphics:
 
         :return:
         """
-         # Draw 3x3-grid for tic-tac-toe
+        # Draw 3x3-grid for tic-tac-toe
         pg.draw.line(self.screen, self.white, (0, self.screen_height / 3), (self.screen_width, self.screen_height / 3))
         pg.draw.line(self.screen, self.white, (0, 2 * self.screen_height / 3),
                      (self.screen_width, 2 * self.screen_height / 3))
@@ -124,6 +129,16 @@ class Graphics:
         pg.draw.circle(self.screen, self.blue, (pos_x, pos_y), self.outer_circle_radius)
         pg.draw.circle(self.screen, self.black, (pos_x, pos_y), self.inner_circle_radius)
 
+    def draw_replay_button(self, pos_x, pos_y):
+        """
+
+        :param pos_x:
+        :param pos_y:
+        :return: -
+        """
+        self.replay_button = self.screen.blit(self.game_font.render("Click here for new game.", True, self.red),
+                                              (pos_x, pos_y))
+
     def convert_indices_to_drawing_position(self, row_index, column_index):
         """
         The function converts the indices of a state matrix into a position on the screen.
@@ -145,8 +160,13 @@ class Graphics:
         column_index = m.trunc(3 * pos_x/self.screen_height)
         if self.game_state.get_state() == self.game_state.gaming_state:
             # Refresh the state and check wether a player has won or the game is s draw
-            self.game_state.add_new_state(row_index, column_index)
+            self.game_state.add_new_marker(row_index, column_index)
             self.visualize_matrix()
+        elif self.game_state.get_state() != self.game_state.gaming_state:
+            if self.replay_button.collidepoint((pos_x, pos_y)):
+                self.game_state.set_state(self.game_state.gaming_state)
+                self.game_state.init_gaming_state()
+                self.game_state.toggle_state_changed_flag()
 
     def visualize_matrix(self):
         """
@@ -161,7 +181,7 @@ class Graphics:
                 (x, y) = self.convert_indices_to_drawing_position(row_index, column_index)
                 if state_matrix[row_index, column_index] == self.game_state.player1_marker:
                     self.draw_cross(x, y)
-                    print("Drew a cross.")
+                    # print("Drew a cross.")
                 elif state_matrix[row_index, column_index] == self.game_state.player2_marker:
                     self.draw_circle(x, y)
 
@@ -176,11 +196,14 @@ class Graphics:
                 self.draw_grid()
             elif self.game_state.get_state() == self.game_state.player1_won_state:
                 self.draw_background()
-                print("Player 1 won.")
+                self.draw_replay_button(25, 25)
+                # print("Player 1 won.")
             elif self.game_state.get_state() == self.game_state.player2_won_state:
                 self.draw_background()
-                print("Player 2 won.")
+                self.draw_replay_button(25, 25)
+                # print("Player 2 won.")
             elif self.game_state.get_state() == self.game_state.draw_state:
                 self.draw_background()
-                print("Draw.")
+                self.draw_replay_button(25, 25)
+                # print("Draw.")
             self.game_state.toggle_state_changed_flag()

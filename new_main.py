@@ -4,6 +4,7 @@ import pygame as pg
 
 import sys
 
+# pygame.init() is include in the __init__-function of Graphics
 my_game = visu.Graphics()
 my_game.init_visuals()
 
