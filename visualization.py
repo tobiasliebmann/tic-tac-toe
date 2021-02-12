@@ -2,6 +2,8 @@ import pygame as pg
 
 import state_machine as sm
 
+import math as m
+
 
 class Graphics:
     screen_width = 900
@@ -96,8 +98,8 @@ class Graphics:
         """
         pg.draw.line(self.screen, self.green, (pos_x - self.cross_length/2, pos_y - self.cross_length/2),
                      (pos_x + self.cross_length/2, pos_y + self.cross_length/2))
-        pg.draw.line(self.screen, self.green, (pos_x - self.cross_length/2, pos_y - self.cross_length/2),
-                     (pos_x + self.cross_length/2, pos_y + self.cross_length/2))
+        pg.draw.line(self.screen, self.green, (pos_x + self.cross_length/2, pos_y + self.cross_length/2),
+                     (pos_x - self.cross_length/2, pos_y - self.cross_length/2))
 
     def draw_circle(self, pos_x, pos_y):
         """
@@ -109,7 +111,7 @@ class Graphics:
         pg.draw.circle(self.screen, self.blue, (pos_x, pos_y), self.outer_circle_radius)
         pg.draw.circle(self.screen, self.black, (pos_x, pos_y), self.inner_circle_radius)
 
-    def convert_indices_to_position(self, row_index, column_index):
+    def convert_indices_to_drawing_position(self, row_index, column_index):
         """
         The function converts the indices of a state matrix into a position on the screen.
         :param row_index: row index of a state matrix. Possible values are 0,1 or 2
@@ -119,6 +121,19 @@ class Graphics:
         return (self.screen_width * row_index/3 + self.screen_width/6,
                 self.screen_height * column_index/3 + self.screen_height/6)
 
+    def on_click(self, pos_x, pos_y):
+        """
+
+        :param pos_x:
+        :param pos_y:
+        :return:
+        """
+        row_index = m.trunc(3 * pos_x/self.screen_width)
+        column_index = m.trunc(3 * pos_y/self.screen_height)
+        self.game_state.refresh_state(row_index, column_index)
+        self.render_game()
+
+
     def render_game(self):
         """
         This method
@@ -127,7 +142,7 @@ class Graphics:
         state_matrix = self.game_state.get_state_matrix()
         for row_index in range(3):
             for column_index in range(3):
-                (x, y) = self.convert_indices_to_position(row_index, column_index)
+                (x, y) = self.convert_indices_to_drawing_position(row_index, column_index)
                 if state_matrix[row_index][column_index] == self.game_state.player1_marker:
                     self.draw_cross(x, y)
                 elif state_matrix[row_index][column_index] == self.game_state.player1_marker:

@@ -124,7 +124,7 @@ class State:
         self.player2_win_flag = False
         self.draw_flag = False
 
-    def on_click(self, row_index, column_index):
+    def refresh_state(self, row_index, column_index):
         """
         Defines the actions that are performed, when the screen is clicked and a new graphic is add to the tic-tac-toe
         grid.
