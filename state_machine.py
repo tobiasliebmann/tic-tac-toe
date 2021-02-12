@@ -2,7 +2,6 @@ import numpy as np
 
 
 class State:
-
     # The current state of the system. There are only two states 1 and 2.
     # 1 - Corresponds to the actual game.
     # 2 - Is the ending screen.
@@ -117,3 +116,10 @@ class State:
         self.player1_win_flag = False
         self.player2_win_flag = False
         self.draw_flag = False
+
+    def on_click(self):
+        """
+        Defines the actions that are performed, when the screen is clicked and a new graphic is add to the tic-tac-toe
+        grid.
+        :return:
+        """
