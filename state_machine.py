@@ -20,7 +20,7 @@ class State:
     player2_win_flag = False
     draw_flag = False
 
-    # Getter and Setter method for the class varaibles.
+    # Getter and Setter method for the class variables.
 
     def get_state(self):
         return self.state
@@ -35,21 +35,21 @@ class State:
         self.turn = new_turn
 
     def get_state_matrix(self):
-        return state_matrix
+        return self.state_matrix
 
     def set_state_matrix(self, new_state_matrix):
         self.state_matrix = new_state_matrix
 
-    def get_player1_win_falg(self):
+    def get_player1_win_flag(self):
         return self.player1_win_flag
 
-    def set_player1_win_falg(self, new_player1_win_flag):
+    def set_player1_win_flag(self, new_player1_win_flag):
         self.player1_win_flag = new_player1_win_flag
 
-    def get_player2_win_falg(self):
+    def get_player2_win_flag(self):
         return self.player2_win_flag
 
-    def set_player2_win_falg(self, new_player1_win_flag):
+    def set_player2_win_flag(self, new_player2_win_flag):
         self.player2_win_flag = new_player2_win_flag
 
     def get_draw_flag(self):
@@ -66,7 +66,7 @@ class State:
         :param row_index: The index defining the row. It can take the values 0, 1 and 2.
         :param column_index: The index of the column ranging from 0 to 2.
         :param value: The new values replacing the current values at the defined position.
-        :return:
+        :return: -
         """
         self.state_matrix[row_index, column_index] = value
 
@@ -97,7 +97,7 @@ class State:
             if total == -3:
                 return -1
         # Checking the diagonals by looking at the trace of the original state_matrix and a transformed matrix where
-        # the diagonal elements are taken from the bottom leeft corner to the top right corner of the state matrix.
+        # the diagonal elements are taken from the bottom left corner to the top right corner of the state matrix.
         trafo_matrix = np.array([[0, 0, 1], [0, 1, 0], [1, 0, 0]])
         trace = np.trace(self.state_matrix)
         trafo_trace = np.trace(np.matmul(trafo_matrix, self.state_matrix))
@@ -105,3 +105,15 @@ class State:
             return 1
         if trace == -3 or trafo_trace == -3:
             return -1
+
+    def init_game_state(self):
+        """
+        Initializes the state corresponding to the start of a game.
+        :return: -
+        """
+        self.state = 1
+        self.turn = 1
+        self.state_matrix = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+        self.player1_win_flag = False
+        self.player2_win_flag = False
+        self.draw_flag = False
