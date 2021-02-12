@@ -2,13 +2,21 @@ import numpy as np
 
 
 class State:
-    # The current state of the system. There are only two states 1 and 2.
+    gaming_state = 1
+    player1_won_state = 2
+    player2_won_state = 3
+    draw_state = 4
+
+    # The current state of the system. There are four states.
     # todo: 0 - Corresponds to the tart screen.
     # 1 - Corresponds to the actual game.
     # 2 - Player 1 has won.
     # 3 - Player 2 has won.
     # 4 - Game is a draw.
-    state = 1
+    state = gaming_state
+
+    # Flag which is raised when a state is chenged for the first time
+    state_changed_flag = False
 
     # Markers for the palyers that used in the state matrix.
     player1_marker = 1
@@ -33,6 +41,12 @@ class State:
 
     def set_state(self, new_state):
         self.state = new_state
+
+    def get_state_changed_flag(self):
+        return self.state_changed_flag
+
+    def toggle_state_changed_flag(self):
+        self.state_changed_flag = not self.state_changed_flag
 
     def get_turn(self):
         return self.turn
@@ -124,7 +138,7 @@ class State:
         self.set_player2_win_flag(False)
         self.set_draw_flag(False)
 
-    def refresh_state(self, row_index, column_index):
+    def add_new_state(self, row_index, column_index):
         """
         Defines the actions that are performed, when the screen is clicked and a new graphic is add to the tic-tac-toe
         grid.
@@ -140,10 +154,13 @@ class State:
             if self.turn >= 6:
                 self.win_check()
                 if self.get_player1_win_flag():
-                    self.set_state(2)
+                    self.set_state(self.player1_won_state)
+                    self.toggle_state_changed_flag()
                 elif self.get_player2_win_flag():
-                    self.set_state(3)
+                    self.set_state(self.player2_won_state)
+                    self.toggle_state_changed_flag()
                 elif self.get_turn() >= 10:
-                    self.set_state(4)
+                    self.set_state(self.draw_state)
+                    self.toggle_state_changed_flag()
         else:
             print("You can not make this move.")

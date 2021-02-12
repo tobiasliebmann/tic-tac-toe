@@ -5,10 +5,11 @@ import pygame as pg
 import sys
 
 my_game = visu.Graphics()
-my_game.init_background()
+my_game.init_visuals()
 
 while 1:
     pos = pg.mouse.get_pos()
+    my_game.check_visuals()
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
@@ -18,3 +19,7 @@ while 1:
             pos_y = pos[1]
             my_game.on_click(pos_x, pos_y)
     pg.display.flip()
+    if my_game.game_state.get_state_changed_flag():
+        pg.time.delay(500)
+    else:
+        pg.time.delay(5)

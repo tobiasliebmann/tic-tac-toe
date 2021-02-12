@@ -28,6 +28,14 @@ class Graphics:
         pg.init()
         self.game_state.init_game_state()
 
+    def init_visuals(self):
+        """
+
+        :return:
+        """
+        self.draw_background()
+        self.draw_grid()
+
     def get_screen_size(self):
         """
 
@@ -74,21 +82,26 @@ class Graphics:
         """
         return self.screen_height
 
-    def init_background(self):
+    def draw_background(self):
         """
 
         :return:
         """
         pg.display.set_caption('Tic-Tac-Toe')
         self.screen.fill(self.black)
-        if self.game_state.get_state() == 1:
-            # Draw 3x3-grid for tic-tac-toe
-            pg.draw.line(self.screen, self.white, (0, self.screen_height / 3), (self.screen_width, self.screen_height / 3))
-            pg.draw.line(self.screen, self.white, (0, 2 * self.screen_height / 3),
-                         (self.screen_width, 2 * self.screen_height / 3))
-            pg.draw.line(self.screen, self.white, (self.screen_width / 3, 0), (self.screen_width / 3, self.screen_height))
-            pg.draw.line(self.screen, self.white, (2 * self.screen_width / 3, 0),
-                         (2 * self.screen_width / 3, self.screen_height))
+
+    def draw_grid(self):
+        """
+
+        :return:
+        """
+         # Draw 3x3-grid for tic-tac-toe
+        pg.draw.line(self.screen, self.white, (0, self.screen_height / 3), (self.screen_width, self.screen_height / 3))
+        pg.draw.line(self.screen, self.white, (0, 2 * self.screen_height / 3),
+                     (self.screen_width, 2 * self.screen_height / 3))
+        pg.draw.line(self.screen, self.white, (self.screen_width / 3, 0), (self.screen_width / 3, self.screen_height))
+        pg.draw.line(self.screen, self.white, (2 * self.screen_width / 3, 0),
+                     (2 * self.screen_width / 3, self.screen_height))
 
     def draw_cross(self, pos_x, pos_y):
         """
@@ -130,29 +143,44 @@ class Graphics:
         """
         row_index = m.trunc(3 * pos_y/self.screen_width)
         column_index = m.trunc(3 * pos_x/self.screen_height)
-        self.game_state.refresh_state(row_index, column_index)
-        self.render_game()
+        if self.game_state.get_state() == self.game_state.gaming_state:
+            # Refresh the state and check wether a player has won or the game is s draw
+            self.game_state.add_new_state(row_index, column_index)
+            self.visualize_matrix()
 
-    def render_game(self):
+    def visualize_matrix(self):
         """
         This method
         :return: -
         """
         state_matrix = self.game_state.get_state_matrix()
-        if self.game_state.get_state() == 1:
-            for row_index in range(3):
-                for column_index in range(3):
-                    (x, y) = self.convert_indices_to_drawing_position(row_index, column_index)
-                    if state_matrix[row_index, column_index] == self.game_state.player1_marker:
-                        self.draw_cross(x, y)
-                    elif state_matrix[row_index, column_index] == self.game_state.player2_marker:
-                        self.draw_circle(x, y)
-        elif self.game_state.get_state() == 2:
-            self.init_background()
-            print("Player 1 has won.")
-        elif self.game_state.get_state() == 3:
-            self.init_background()
-            print("Player 2 has won.")
-        elif self.game_state.get_state() == 4:
-            self.init_background()
-            print("Draw.")
+        # if self.game_state.get_state() == self.game_state.gaming_state:
+        print(state_matrix)
+        for row_index in range(3):
+            for column_index in range(3):
+                (x, y) = self.convert_indices_to_drawing_position(row_index, column_index)
+                if state_matrix[row_index, column_index] == self.game_state.player1_marker:
+                    self.draw_cross(x, y)
+                    print("Drew a cross.")
+                elif state_matrix[row_index, column_index] == self.game_state.player2_marker:
+                    self.draw_circle(x, y)
+
+    def check_visuals(self):
+        """
+        This method changes the background according to the game state
+        :return: -
+        """
+        if self.game_state.get_state_changed_flag():
+            if self.game_state.get_state() == self.game_state.gaming_state:
+                self.draw_background()
+                self.draw_grid()
+            elif self.game_state.get_state() == self.game_state.player1_won_state:
+                self.draw_background()
+                print("Player 1 won.")
+            elif self.game_state.get_state() == self.game_state.player2_won_state:
+                self.draw_background()
+                print("Player 2 won.")
+            elif self.game_state.get_state() == self.game_state.draw_state:
+                self.draw_background()
+                print("Draw.")
+            self.game_state.toggle_state_changed_flag()
