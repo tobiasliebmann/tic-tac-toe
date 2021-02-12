@@ -133,7 +133,6 @@ class Graphics:
         self.game_state.refresh_state(row_index, column_index)
         self.render_game()
 
-
     def render_game(self):
         """
         This method

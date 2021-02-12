@@ -92,37 +92,37 @@ class State:
         for x in self.state_matrix:
             total = np.sum(x)
             if total == 3*self.player1_marker:
-                self.player1_win_flag = True
+                self.set_player1_win_flag(True)
             if total == 3*self.player2_marker:
-                self.player2_win_flag = True
+                self.set_player2_win_flag(True)
         # Check the columns for a winner
         for x in transposed_matrix:
             total = np.sum(x)
             if total == 3*self.player1_marker:
-                self.player1_win_flag = True
+                self.set_player1_win_flag(True)
             if total == 3*self.player2_marker:
-                self.player2_win_flag = True
+                self.set_player2_win_flag(True)
         # Checking the diagonals by looking at the trace of the original state_matrix and a transformed matrix where
         # the diagonal elements are taken from the bottom left corner to the top right corner of the state matrix.
         trafo_matrix = np.array([[0, 0, 1], [0, 1, 0], [1, 0, 0]])
         trace = np.trace(self.state_matrix)
         trafo_trace = np.trace(np.matmul(trafo_matrix, self.state_matrix))
         if trace == 3*self.player1_marker or trafo_trace == 3*self.player1_marker:
-            self.player1_win_flag = True
+            self.set_player1_win_flag(True)
         if trace == 3*self.player2_marker or trafo_trace == 3*self.player2_marker:
-            self.player2_win_flag = True
+            self.set_player2_win_flag(True)
 
     def init_game_state(self):
         """
         Initializes the state corresponding to the start of a game.
         :return: -
         """
-        self.state = 1
-        self.turn = 1
-        self.state_matrix = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
-        self.player1_win_flag = False
-        self.player2_win_flag = False
-        self.draw_flag = False
+        self.set_state(1)
+        self.set_turn(1)
+        self.set_state_matrix(np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]))
+        self.set_player1_win_flag(False)
+        self.set_player2_win_flag(False)
+        self.set_draw_flag(False)
 
     def refresh_state(self, row_index, column_index):
         """
@@ -139,11 +139,11 @@ class State:
             # You need at least 5 turns before you can win
             if self.turn >= 6:
                 self.win_check()
-                if self.player1_win_flag:
-                    self.game_state = 2
-                elif self.player2_win_flag:
-                    self.game_state = 3
-                elif self.turn >= 10:
-                    self.game_state = 4
+                if self.get_player1_win_flag():
+                    self.set_state(2)
+                elif self.get_player2_win_flag():
+                    self.set_state(3)
+                elif self.get_turn() >= 10:
+                    self.set_state(4)
         else:
             print("You can not make this move.")

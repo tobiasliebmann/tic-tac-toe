@@ -17,5 +17,4 @@ while 1:
             pos_x = pos[0]
             pos_y = pos[1]
             my_game.on_click(pos_x, pos_y)
-    my_game.render_game()
     pg.display.flip()
