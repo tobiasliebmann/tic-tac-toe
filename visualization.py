@@ -140,10 +140,20 @@ class Graphics:
         :return: -
         """
         state_matrix = self.game_state.get_state_matrix()
-        for row_index in range(3):
-            for column_index in range(3):
-                (x, y) = self.convert_indices_to_drawing_position(row_index, column_index)
-                if state_matrix[row_index, column_index] == self.game_state.player1_marker:
-                    self.draw_cross(x, y)
-                elif state_matrix[row_index, column_index] == self.game_state.player2_marker:
-                    self.draw_circle(x, y)
+        if self.game_state.get_state() == 1:
+            for row_index in range(3):
+                for column_index in range(3):
+                    (x, y) = self.convert_indices_to_drawing_position(row_index, column_index)
+                    if state_matrix[row_index, column_index] == self.game_state.player1_marker:
+                        self.draw_cross(x, y)
+                    elif state_matrix[row_index, column_index] == self.game_state.player2_marker:
+                        self.draw_circle(x, y)
+        elif self.game_state.get_state() == 2:
+            self.init_background()
+            print("Player 1 has won.")
+        elif self.game_state.get_state() == 3:
+            self.init_background()
+            print("Player 2 has won.")
+        elif self.game_state.get_state() == 4:
+            self.init_background()
+            print("Draw.")
