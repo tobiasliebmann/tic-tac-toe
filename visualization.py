@@ -114,10 +114,10 @@ class Graphics:
         :param pos_y: y coordinate of the middle of the cross.
         :return: -
         """
-        pg.draw.line(self.screen, self.green, (pos_x - self.cross_length/2, pos_y - self.cross_length/2),
-                     (pos_x + self.cross_length/2, pos_y + self.cross_length/2))
-        pg.draw.line(self.screen, self.green, (pos_x + self.cross_length/2, pos_y - self.cross_length/2),
-                     (pos_x - self.cross_length/2, pos_y + self.cross_length/2))
+        pg.draw.line(self.screen, self.green, (pos_x - self.cross_length / 2, pos_y - self.cross_length / 2),
+                     (pos_x + self.cross_length / 2, pos_y + self.cross_length / 2))
+        pg.draw.line(self.screen, self.green, (pos_x + self.cross_length / 2, pos_y - self.cross_length / 2),
+                     (pos_x - self.cross_length / 2, pos_y + self.cross_length / 2))
 
     def draw_circle(self, pos_x, pos_y):
         """
@@ -139,6 +139,20 @@ class Graphics:
         self.replay_button = self.screen.blit(self.game_font.render("Click here for new game.", True, self.red),
                                               (pos_x, pos_y))
 
+    def draw_string(self, string_to_draw, pos_x, pos_y):
+        """
+
+        :param string_to_draw:
+        :param pos_x:
+        :param pos_y:
+        :return:
+        """
+        string_graphic = self.game_font.render(string_to_draw, True, self.white)
+        (string_graphic_width, string_graphic_height) = string_graphic.get_size()
+        print()
+        self.screen.blit(string_graphic, (round(pos_x - string_graphic_width/2),
+                                          round(pos_y - string_graphic_height/2)))
+
     def convert_indices_to_drawing_position(self, row_index, column_index):
         """
         The function converts the indices of a state matrix into a position on the screen.
@@ -146,8 +160,8 @@ class Graphics:
         :param column_index: column index of a state matrix. Possible values are 0,1 or 2
         :return: The according position on the screen
         """
-        return (self.screen_width * column_index/3 + self.screen_width/6,
-                self.screen_height * row_index/3 + self.screen_height/6)
+        return (self.screen_width * column_index / 3 + self.screen_width / 6,
+                self.screen_height * row_index / 3 + self.screen_height / 6)
 
     def on_click(self, pos_x, pos_y):
         """
@@ -156,8 +170,8 @@ class Graphics:
         :param pos_y:
         :return:
         """
-        row_index = m.trunc(3 * pos_y/self.screen_width)
-        column_index = m.trunc(3 * pos_x/self.screen_height)
+        row_index = m.trunc(3 * pos_y / self.screen_width)
+        column_index = m.trunc(3 * pos_x / self.screen_height)
         if self.game_state.get_state() == self.game_state.gaming_state:
             # Refresh the state and check wether a player has won or the game is s draw
             self.game_state.add_new_marker(row_index, column_index)
@@ -197,13 +211,16 @@ class Graphics:
             elif self.game_state.get_state() == self.game_state.player1_won_state:
                 self.draw_background()
                 self.draw_replay_button(25, 25)
+                self.draw_string("Player 1 has won.", self.screen_width/2, self.screen_height/2)
                 # print("Player 1 won.")
             elif self.game_state.get_state() == self.game_state.player2_won_state:
                 self.draw_background()
                 self.draw_replay_button(25, 25)
+                self.draw_string("Player 2 has won.", self.screen_width/2, self.screen_height/2)
                 # print("Player 2 won.")
             elif self.game_state.get_state() == self.game_state.draw_state:
                 self.draw_background()
                 self.draw_replay_button(25, 25)
+                self.draw_string("Draw.", self.screen_width/2, self.screen_height/2)
                 # print("Draw.")
             self.game_state.toggle_state_changed_flag()
