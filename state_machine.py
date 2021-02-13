@@ -1,5 +1,7 @@
 import numpy as np
 
+import functools as ft
+
 
 class State:
     # The current state of the system. There are four states.
@@ -20,6 +22,8 @@ class State:
     player2_marker = -1
     not_set_marker = 0
 
+    allowed_markers = (player2_marker, not_set_marker, player1_marker)
+
     def __init__(self):
         # Initialize the game in the gaming state
         self._state = self.gaming_state
@@ -36,8 +40,12 @@ class State:
         self._draw_flag = False
 
     # --------------------------------------------------
-    # Getter and Setter method for the class attributes.
+    # Getter and Setter methods for the class attributes.
     # --------------------------------------------------
+    # The setter and getter methods don't have documentation since the they only set and return the according values.
+    # Further the getter methods check if the entered value has the according type if it has not a value error is
+    # raised. The only exception is the method to set the state matrix since its checking procedure is rather
+    # complicated.
 
     def get_state(self):
         return self._state
@@ -55,7 +63,7 @@ class State:
         if isinstance(new_state_changed_flag, bool):
             self._state_changed_flag = new_state_changed_flag
         else:
-            raise ValueError("state_changed_flag needs to be a bool.")
+            raise ValueError("state_changed_flag needs to be a boolean.")
 
     def get_turn(self):
         return self._turn
@@ -70,26 +78,46 @@ class State:
         return self._state_matrix
 
     def set_state_matrix(self, new_state_matrix):
-        if new_state_matrix.shape == (3, 3) and
+        """
+        The setter method to set a new state matrix. The method checks if it is a 3x3-matrix and checks if the entries
+        are either -1, 0 or 1. If they aren't a Value error is raised.
+        :param new_state_matrix:
+        :return:
+        """
+        # Checks if the entries of the state matrix are either -1, 0 or 1 by using the reduce function of functools.
+        check_matrix_vals = ft.reduce(lambda x, y: (x in self.allowed_markers) and (y in self.allowed_markers), new_state_matrix.reshape(9), True)
+        # Check the if the marix is 3x3 and if it has the correct entries.
+        if new_state_matrix.shape == (3, 3) and check_matrix_vals:
             self._state_matrix = new_state_matrix
+        else:
+            raise ValueError("The entry's of the state matrix can only be -1, 0 or 1.")
 
     def get_player1_win_flag(self):
         return self._player1_win_flag
 
     def set_player1_win_flag(self, new_player1_win_flag):
-        self._player1_win_flag = new_player1_win_flag
+        if isinstance(new_player1_win_flag, bool):
+            self._player1_win_flag = new_player1_win_flag
+        else:
+            raise ValueError("player1_win_flag has to be a boolean.")
 
     def get_player2_win_flag(self):
         return self._player2_win_flag
 
     def set_player2_win_flag(self, new_player2_win_flag):
-        self._player2_win_flag = new_player2_win_flag
+        if isinstance(new_player2_win_flag, bool):
+            self._player2_win_flag = new_player2_win_flag
+        else:
+            raise ValueError("player2_win_flag has to be a boolean.")
 
     def get_draw_flag(self):
         return self._draw_flag
 
     def set_draw_flag(self, new_draw_flag):
-        self._draw_flag = new_draw_flag
+        if isinstance(new_draw_flag, bool):
+            self._draw_flag = new_draw_flag
+        else:
+            raise ValueError("draw_flag has to be a boolean.")
 
     # Define the attributes as property objects.
     state = property(get_state, set_state)
@@ -99,6 +127,10 @@ class State:
     player2_win_flag = property(get_player2_win_flag, set_player2_win_flag)
     draw_flag = property(get_draw_flag, set_draw_flag)
     state_changed_flag = property(get_state_changed_flag, set_state_changed_flag)
+
+    # -----------------------------
+    # Normal methods for the class.
+    # -----------------------------
 
     def set_state_matrix_component(self, row_index, column_index, value):
         """
@@ -110,8 +142,10 @@ class State:
         :param value: Int, the new values replacing the current values at the defined position.
         :return: -
         """
-        # todo: Add test here.
-        self.state_matrix[row_index, column_index] = value
+        if value in self.allowed_markers:
+            self.state_matrix[row_index, column_index] = value
+        else:
+            raise ValueError("An entry of the state matrix can only be -1, 0 or 1.")
 
     def win_check(self):
         """
