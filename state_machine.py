@@ -28,7 +28,7 @@ class State:
         # Initialize the game in the gaming state
         self._state = self.gaming_state
         # Flag which is raised when a state is changed for the first time
-        self._state_changed_flag = False
+        self._state_changed_flag = True
         # The current turn in the tic-tac-toe game.
         self._turn = 1
         # The state matrix of the game. It is initialized with only 0s, corresponding to an empty tic tac toe grid.

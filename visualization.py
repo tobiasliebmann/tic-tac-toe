@@ -14,9 +14,6 @@ class Graphics:
     # Define a tuple consisting of width and height.
     screen_size = (screen_height, screen_width)
 
-    # The game_state is a State object, which can be found in the file state_machine.py
-    game_state = sm.State()
-
     # Define the length of an X graphic from the top corners to each other. This defines a square where X is then
     # defined by the diagonals.
     cross_length = screen_width / 3
@@ -40,64 +37,12 @@ class Graphics:
         self.screen = pg.display.set_mode(self.screen_size)
         # Initialize the font
         self.game_font = pg.font.SysFont("Comic Sans MS", 30)
+        # The game_state is a State object, which can be found in the file state_machine.py
+        self.game_state = sm.State()
         # Initialize the gaming state
         self.game_state.init_gaming_state()
         # The replay button is also not initialized since it is a graphic that will be added when needed.
         self.replay_button = None
-
-    def init_visuals(self):
-        """
-        This method draws a white tic tac toe grid in front of a black background.
-        :return: -
-        """
-        self.draw_background()
-        self.draw_grid()
-
-    def get_screen_size(self):
-        """
-        Getter method for the screen size.
-        :return: -
-        """
-        return self.screen_size
-
-    def set_screen_size(self, new_screen_width, new_screen_height):
-        """
-        Setter method for the screen size.
-        :param new_screen_width: int, width of the screen in pixels.
-        :param new_screen_height: int, height of the screen in pixels.
-        :return: -
-        """
-        self.screen_size = (new_screen_width, new_screen_height)
-
-    def set_screen_width(self, new_screen_width):
-        """
-        Setter method of the screen width.
-        :param new_screen_width: int, width of the screen in pixels.
-        :return: -
-        """
-        self.screen_width = new_screen_width
-
-    def get_screen_width(self):
-        """
-        Getter method of the screen width.
-        :return: int, screen width in pixels.
-        """
-        return self.screen_width
-
-    def set_screen_height(self, new_screen_height):
-        """
-        Setter method of the screen height.
-        :param new_screen_height: int, screen height in pixels.
-        :return: -
-        """
-        self.screen_height = new_screen_height
-
-    def get_screen_height(self):
-        """
-        Getter method of the screen height.
-        :return: int, the screen height in pixels.
-        """
-        return self.screen_height
 
     def draw_background(self):
         """
