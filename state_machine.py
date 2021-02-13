@@ -34,7 +34,9 @@ class State:
     player2_win_flag = False
     draw_flag = False
 
-    # Getter and Setter method for the class variables.
+    # --------------------------------------------------
+    # Getter and Setter method for the class attributes.
+    # --------------------------------------------------
 
     def get_state(self):
         return self.state
@@ -83,9 +85,9 @@ class State:
         Allows one to manually set the elements of the state matrix. The position of the element is defined by the
         corresponding row and column index.
         Example: The row index 2 and the column index 1 means the last row and the middle column
-        :param row_index: The index defining the row. It can take the values 0, 1 and 2.
-        :param column_index: The index of the column ranging from 0 to 2.
-        :param value: The new values replacing the current values at the defined position.
+        :param row_index: Int, the index defining the row. It can take the values 0, 1 and 2.
+        :param column_index: Int, the index of the column ranging from 0 to 2.
+        :param value: Int, the new values replacing the current values at the defined position.
         :return: -
         """
         self.state_matrix[row_index, column_index] = value
@@ -95,8 +97,6 @@ class State:
         This method checks the current state matrix and looks if a player has won.
         A win is defined by three similar numbers in a row, column or diagonal.
         The checking for a winner is done by adding up the rows, columns or diagonals up.
-        If the resulting value is 3 => player 1 has won.
-        If the resulting values is -3 => player 2 has won.
         The win flags are then changed accordingly.
         :return: -
         """
@@ -162,5 +162,3 @@ class State:
                 elif self.get_turn() >= 10:
                     self.set_state(self.draw_state)
                     self.toggle_state_changed_flag()
-        else:
-            print("You can not make this move.")
