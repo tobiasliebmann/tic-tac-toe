@@ -10,12 +10,13 @@ class State:
     # 2 - Player 1 has won.
     # 3 - Player 2 has won.
     # 4 - Game is a draw.
+    menu_state = 0
     gaming_state = 1
     player1_won_state = 2
     player2_won_state = 3
     draw_state = 4
 
-    allowed_states = (gaming_state, player1_won_state, player2_won_state, draw_state)
+    allowed_states = (menu_state, gaming_state, player1_won_state, player2_won_state, draw_state)
 
     # Markers for the players that are used in the state matrix.
     player1_marker = 1
@@ -86,7 +87,7 @@ class State:
         """
         # Checks if the entries of the state matrix are either -1, 0 or 1 by using the reduce function of functools.
         check_matrix_vals = ft.reduce(lambda x, y: (x in self.allowed_markers) and (y in self.allowed_markers), new_state_matrix.reshape(9), True)
-        # Check the if the marix is 3x3 and if it has the correct entries.
+        # Check the if the matrix is 3x3 and if it has the correct entries.
         if new_state_matrix.shape == (3, 3) and check_matrix_vals:
             self._state_matrix = new_state_matrix
         else:
