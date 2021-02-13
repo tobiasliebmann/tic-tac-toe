@@ -13,70 +13,92 @@ class State:
     player2_won_state = 3
     draw_state = 4
 
-    # Markers for the palyers that are used in the state matrix.
+    allowed_states = (gaming_state, player1_won_state, player2_won_state, draw_state)
+
+    # Markers for the players that are used in the state matrix.
     player1_marker = 1
     player2_marker = -1
+    not_set_marker = 0
 
     def __init__(self):
         # Initialize the game in the gaming state
-        self.state = self.gaming_state
-        # Flag which is raised when a state is chenged for the first time
-        self.state_changed_flag = False
+        self._state = self.gaming_state
+        # Flag which is raised when a state is changed for the first time
+        self._state_changed_flag = False
         # The current turn in the tic-tac-toe game.
-        self.turn = 1
+        self._turn = 1
         # The state matrix of the game. It is initialized with only 0s, corresponding to an empty tic tac toe grid.
         # A 1 corresponds to player1 using the crosses. A -1 corresponds to player 2 using the circles.
-        self.state_matrix = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+        self._state_matrix = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
         # Flags to indicate the result of a game.
-        self.player1_win_flag = False
-        self.player2_win_flag = False
-        self.draw_flag = False
+        self._player1_win_flag = False
+        self._player2_win_flag = False
+        self._draw_flag = False
 
     # --------------------------------------------------
     # Getter and Setter method for the class attributes.
     # --------------------------------------------------
 
     def get_state(self):
-        return self.state
+        return self._state
 
     def set_state(self, new_state):
-        self.state = new_state
+        if new_state in self.allowed_states:
+            self._state = new_state
+        else:
+            raise ValueError("The new state has to be on of the following values"+str(self.allowed_states)+".")
 
     def get_state_changed_flag(self):
-        return self.state_changed_flag
+        return self._state_changed_flag
 
-    def toggle_state_changed_flag(self):
-        self.state_changed_flag = not self.state_changed_flag
+    def set_state_changed_flag(self, new_state_changed_flag):
+        if isinstance(new_state_changed_flag, bool):
+            self._state_changed_flag = new_state_changed_flag
+        else:
+            raise ValueError("state_changed_flag needs to be a bool.")
 
     def get_turn(self):
-        return self.turn
+        return self._turn
 
     def set_turn(self, new_turn):
-        self.turn = new_turn
+        if isinstance(new_turn, int) and 0 <= new_turn <= 10:
+            self._turn = new_turn
+        else:
+            raise ValueError("turn needs to be a positive integer smaller or equal than 10. ")
 
     def get_state_matrix(self):
-        return self.state_matrix
+        return self._state_matrix
 
     def set_state_matrix(self, new_state_matrix):
-        self.state_matrix = new_state_matrix
+        if new_state_matrix.shape == (3, 3) and
+            self._state_matrix = new_state_matrix
 
     def get_player1_win_flag(self):
-        return self.player1_win_flag
+        return self._player1_win_flag
 
     def set_player1_win_flag(self, new_player1_win_flag):
-        self.player1_win_flag = new_player1_win_flag
+        self._player1_win_flag = new_player1_win_flag
 
     def get_player2_win_flag(self):
-        return self.player2_win_flag
+        return self._player2_win_flag
 
     def set_player2_win_flag(self, new_player2_win_flag):
-        self.player2_win_flag = new_player2_win_flag
+        self._player2_win_flag = new_player2_win_flag
 
     def get_draw_flag(self):
-        return self.draw_flag
+        return self._draw_flag
 
     def set_draw_flag(self, new_draw_flag):
-        self.draw_flag = new_draw_flag
+        self._draw_flag = new_draw_flag
+
+    # Define the attributes as property objects.
+    state = property(get_state, set_state)
+    turn = property(get_turn, set_turn)
+    state_matrix = property(get_state_matrix, set_state_matrix)
+    player1_win_flag = property(get_player1_win_flag, set_player1_win_flag)
+    player2_win_flag = property(get_player2_win_flag, set_player2_win_flag)
+    draw_flag = property(get_draw_flag, set_draw_flag)
+    state_changed_flag = property(get_state_changed_flag, set_state_changed_flag)
 
     def set_state_matrix_component(self, row_index, column_index, value):
         """
@@ -88,6 +110,7 @@ class State:
         :param value: Int, the new values replacing the current values at the defined position.
         :return: -
         """
+        # todo: Add test here.
         self.state_matrix[row_index, column_index] = value
 
     def win_check(self):
@@ -104,37 +127,37 @@ class State:
         for x in self.state_matrix:
             total = np.sum(x)
             if total == 3 * self.player1_marker:
-                self.set_player1_win_flag(True)
+                self.player1_win_flag = True
             if total == 3 * self.player2_marker:
-                self.set_player2_win_flag(True)
+                self.player2_win_flag = True
         # Check the columns for a winner
         for x in transposed_matrix:
             total = np.sum(x)
             if total == 3 * self.player1_marker:
-                self.set_player1_win_flag(True)
+                self.player1_win_flag = True
             if total == 3 * self.player2_marker:
-                self.set_player2_win_flag(True)
+                self.player2_win_flag = True
         # Checking the diagonals by looking at the trace of the original state_matrix and a transformed matrix where
         # the diagonal elements are taken from the bottom left corner to the top right corner of the state matrix.
         trafo_matrix = np.array([[0, 0, 1], [0, 1, 0], [1, 0, 0]])
         trace = np.trace(self.state_matrix)
         trafo_trace = np.trace(np.matmul(trafo_matrix, self.state_matrix))
         if trace == 3 * self.player1_marker or trafo_trace == 3 * self.player1_marker:
-            self.set_player1_win_flag(True)
+            self.player1_win_flag = True
         if trace == 3 * self.player2_marker or trafo_trace == 3 * self.player2_marker:
-            self.set_player2_win_flag(True)
+            self.player2_win_flag = True
 
     def init_gaming_state(self):
         """
         Initializes the state corresponding to the start of a game.
         :return: -
         """
-        self.set_state(self.gaming_state)
-        self.set_turn(1)
-        self.set_state_matrix(np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]]))
-        self.set_player1_win_flag(False)
-        self.set_player2_win_flag(False)
-        self.set_draw_flag(False)
+        self.state = self.gaming_state
+        self.turn = 1
+        self.state_matrix = np.full((3, 3), self.not_set_marker)
+        self.player1_win_flag = False
+        self.player2_win_flag = False
+        self.draw_flag = False
 
     def add_new_marker(self, row_index, column_index):
         """
@@ -142,7 +165,7 @@ class State:
         grid.
         :return:
         """
-        if self.state_matrix[row_index][column_index] == 0:
+        if self.state_matrix[row_index][column_index] == self.not_set_marker:
             if self.turn % 2 != 0:
                 self.set_state_matrix_component(row_index, column_index, self.player1_marker)
             else:
@@ -151,12 +174,12 @@ class State:
             # You need at least 5 turns before you can win
             if self.turn >= 6:
                 self.win_check()
-                if self.get_player1_win_flag():
-                    self.set_state(self.player1_won_state)
-                    self.toggle_state_changed_flag()
-                elif self.get_player2_win_flag():
-                    self.set_state(self.player2_won_state)
-                    self.toggle_state_changed_flag()
-                elif self.get_turn() >= 10:
-                    self.set_state(self.draw_state)
-                    self.toggle_state_changed_flag()
+                if self.player1_win_flag:
+                    self.state = self.player1_won_state
+                    self.state_changed_flag = True
+                elif self.player2_win_flag:
+                    self.state = self.player2_won_state
+                    self.state_changed_flag = True
+                elif self.turn >= 10:
+                    self.state = self.draw_state
+                    self.state_changed_flag = True

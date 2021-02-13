@@ -17,11 +17,11 @@ class Graphics:
     # The game_state is a State object, which can be found in the file state_machine.py
     game_state = sm.State()
 
-    # Define the length of an X graphic from the top corners to each other. This deines a square where X is then
+    # Define the length of an X graphic from the top corners to each other. This defines a square where X is then
     # defined by the diagonals.
     cross_length = screen_width / 3
 
-    # The inner and outer radii of the circles definig the o marker.
+    # The inner and outer radii of the circles defining the o marker.
     outer_circle_radius = screen_width / 7
     inner_circle_radius = screen_width / 8
 
@@ -109,7 +109,7 @@ class Graphics:
 
     def draw_grid(self):
         """
-        Draws a white grid deviding the screen into nine equally large parts.
+        Draws a white grid dividing the screen into nine equally large parts.
         :return: -
         """
         # Draw 3x3-grid for tic-tac-toe
@@ -205,9 +205,9 @@ class Graphics:
             # Check if the replay button was clicked
             if self.replay_button.collidepoint((pos_x, pos_y)):
                 # If it is clicked, go back to the game and newly initialize the gaming state.
-                self.game_state.set_state(self.game_state.gaming_state)
+                self.game_state.state = self.game_state.gaming_state
                 self.game_state.init_gaming_state()
-                self.game_state.toggle_state_changed_flag()
+                self.game_state.state_changed_flag = True
 
     def visualize_matrix(self):
         """
@@ -257,4 +257,4 @@ class Graphics:
                 self.draw_replay_button(25, 25)
                 self.draw_string("Draw.", self.screen_width/2, self.screen_height/2)
             # Toggle the flag back to the previous value.
-            self.game_state.toggle_state_changed_flag()
+            self.game_state.state_changed_flag = False
