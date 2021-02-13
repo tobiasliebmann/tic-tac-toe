@@ -29,6 +29,6 @@ while 1:
     # If the game ended add a short delay
     if my_game.game_state.get_state_changed_flag():
         pg.time.delay(500)
-    # If the game did not end, add a delay so that the CPU is occupied all the way.
+    # If the game did not end, add a delay so that the CPU is not occupied all the time.
     else:
         pg.time.delay(5)
