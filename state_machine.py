@@ -2,37 +2,35 @@ import numpy as np
 
 
 class State:
-    gaming_state = 1
-    player1_won_state = 2
-    player2_won_state = 3
-    draw_state = 4
-
     # The current state of the system. There are four states.
     # todo: 0 - Corresponds to the tart screen.
     # 1 - Corresponds to the actual game.
     # 2 - Player 1 has won.
     # 3 - Player 2 has won.
     # 4 - Game is a draw.
-    state = gaming_state
+    gaming_state = 1
+    player1_won_state = 2
+    player2_won_state = 3
+    draw_state = 4
 
-    # Flag which is raised when a state is chenged for the first time
-    state_changed_flag = False
-
-    # Markers for the palyers that used in the state matrix.
+    # Markers for the palyers that are used in the state matrix.
     player1_marker = 1
     player2_marker = -1
 
-    # The current turn in the tic-tac-toe game.
-    turn = 1
-
-    # The state matrix of the game. It is initialized with only 0s, corresponding to an empty tic tac toe grid.
-    # A 1 corresponds to player1 using the crosses. A -1 corresponds to player 2 using the circles.
-    state_matrix = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
-
-    # Flags to indicate the result of a game.
-    player1_win_flag = False
-    player2_win_flag = False
-    draw_flag = False
+    def __init__(self):
+        # Initialize the game in the gaming state
+        self.state = self.gaming_state
+        # Flag which is raised when a state is chenged for the first time
+        self.state_changed_flag = False
+        # The current turn in the tic-tac-toe game.
+        self.turn = 1
+        # The state matrix of the game. It is initialized with only 0s, corresponding to an empty tic tac toe grid.
+        # A 1 corresponds to player1 using the crosses. A -1 corresponds to player 2 using the circles.
+        self.state_matrix = np.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+        # Flags to indicate the result of a game.
+        self.player1_win_flag = False
+        self.player2_win_flag = False
+        self.draw_flag = False
 
     # --------------------------------------------------
     # Getter and Setter method for the class attributes.
@@ -105,25 +103,25 @@ class State:
         # Check the rows for a winner
         for x in self.state_matrix:
             total = np.sum(x)
-            if total == 3*self.player1_marker:
+            if total == 3 * self.player1_marker:
                 self.set_player1_win_flag(True)
-            if total == 3*self.player2_marker:
+            if total == 3 * self.player2_marker:
                 self.set_player2_win_flag(True)
         # Check the columns for a winner
         for x in transposed_matrix:
             total = np.sum(x)
-            if total == 3*self.player1_marker:
+            if total == 3 * self.player1_marker:
                 self.set_player1_win_flag(True)
-            if total == 3*self.player2_marker:
+            if total == 3 * self.player2_marker:
                 self.set_player2_win_flag(True)
         # Checking the diagonals by looking at the trace of the original state_matrix and a transformed matrix where
         # the diagonal elements are taken from the bottom left corner to the top right corner of the state matrix.
         trafo_matrix = np.array([[0, 0, 1], [0, 1, 0], [1, 0, 0]])
         trace = np.trace(self.state_matrix)
         trafo_trace = np.trace(np.matmul(trafo_matrix, self.state_matrix))
-        if trace == 3*self.player1_marker or trafo_trace == 3*self.player1_marker:
+        if trace == 3 * self.player1_marker or trafo_trace == 3 * self.player1_marker:
             self.set_player1_win_flag(True)
-        if trace == 3*self.player2_marker or trafo_trace == 3*self.player2_marker:
+        if trace == 3 * self.player2_marker or trafo_trace == 3 * self.player2_marker:
             self.set_player2_win_flag(True)
 
     def init_gaming_state(self):

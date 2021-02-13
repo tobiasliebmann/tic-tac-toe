@@ -11,8 +11,6 @@ my_game.init_visuals()
 
 # Game loop.
 while 1:
-    # Save the position of the mouse.
-    pos = pg.mouse.get_pos()
     # Check if the visuals correspond to the right state.
     my_game.check_visuals()
     # Check for events in the event que.
@@ -23,8 +21,8 @@ while 1:
             sys.exit()
         # Check for mouse clicks.
         elif event.type == pg.MOUSEBUTTONDOWN:
-            pos_x = pos[0]
-            pos_y = pos[1]
+            # Save the position of the mouse at the moment the screen is clicked.
+            pos_x, pos_y = pg.mouse.get_pos()
             my_game.on_click(pos_x, pos_y)
     # Update the screen.
     pg.display.flip()

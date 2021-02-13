@@ -13,14 +13,6 @@ class Graphics:
     screen_height = screen_width
     # Define a tuple consisting of width and height.
     screen_size = (screen_height, screen_width)
-    # Initialize the pygame screen.
-    screen = pg.display.set_mode(screen_size)
-
-    # The font for texts in the game is initialized in the __init__ method.
-    game_font = None
-
-    # The replay button is also not initialized since it is a graphic that will be added when needed.
-    replay_button = None
 
     # The game_state is a State object, which can be found in the file state_machine.py
     game_state = sm.State()
@@ -44,10 +36,14 @@ class Graphics:
     def __init__(self):
         # Initialize pygame
         pg.init()
+        # Initialize the pygame screen.
+        self.screen = pg.display.set_mode(self.screen_size)
         # Initialize the font
         self.game_font = pg.font.SysFont("Comic Sans MS", 30)
         # Initialize the gaming state
         self.game_state.init_gaming_state()
+        # The replay button is also not initialized since it is a graphic that will be added when needed.
+        self.replay_button = None
 
     def init_visuals(self):
         """
