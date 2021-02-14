@@ -13,6 +13,13 @@ while 1:
     # Check if the visuals correspond to the right state.
     my_game.check_visuals()
     # Check for events in the event que.
+    for button in my_game.buttons:
+        if button.collidepoint(pg.mouse.get_pos()):
+            pg.mouse.set_cursor(pg.cursors.diamond)
+            # If the game did not end, add a delay so that the CPU is not occupied all the time.
+        else:
+            pg.mouse.set_cursor(pg.cursors.arrow)
+            # If the game did not end, add a delay so that the CPU is not occupied all the time.
     for event in pg.event.get():
         # Check if the game was quit.
         if event.type == pg.QUIT:
@@ -28,5 +35,4 @@ while 1:
     # If the game ended add a short delay
     if my_game.game_state.state_changed_flag:
         pg.time.delay(500)
-    # If the game did not end, add a delay so that the CPU is not occupied all the time.
     pg.time.delay(5)

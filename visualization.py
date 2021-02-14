@@ -51,6 +51,7 @@ class Graphics:
         self.to_game_button = None
         self.to_credits_button = None
         self.to_how_to_play_button = None
+        self.buttons = []
 
     def draw_background(self):
         """
@@ -207,6 +208,7 @@ class Graphics:
         """
         # Checks if the state has been changed.
         if self.game_state.get_state_changed_flag():
+            self.buttons = []
             # Gaming state.
             if self.game_state.get_state() == self.game_state.menu_state:
                 self.draw_background()
@@ -214,6 +216,7 @@ class Graphics:
                                                                   self.screen_height/2)
                 self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.white,
                                                                          self.screen_width/2, self.screen_height/2 + 30)
+                self.buttons = [self.to_game_button, self.to_how_to_play_button]
             elif self.game_state.get_state() == self.game_state.gaming_state:
                 self.draw_background()
                 self.draw_grid()
@@ -221,11 +224,15 @@ class Graphics:
                 self.draw_background()
                 self.to_menu_button = self.draw_and_return_button("Click here to go back to main menu.",
                                                                   self.red, 190, 30)
+                self.buttons = [self.to_menu_button]
+                self.draw_string("The game is played by two players. Player 1 has the cross and the player 2\n "
+                                 + "the circles.", self.white, self.screen_width/2, self.screen_height/2)
             else:
                 self.draw_background()
                 self.to_game_button = self.draw_and_return_button("Click here to play a new game.", self.red, 164, 30)
                 self.to_menu_button = self.draw_and_return_button("Click here to go back to main menu.", self.red,
                                                                   190, 60)
+                self.buttons = [self.to_game_button, self.to_menu_button]
                 # Player 1 has won.
                 if self.game_state.get_state() == self.game_state.player1_won_state:
                     self.draw_string("Player 1 has won.", self.white, self.screen_width/2, self.screen_height/2)
