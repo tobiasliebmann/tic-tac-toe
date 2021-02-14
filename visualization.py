@@ -42,7 +42,8 @@ class Graphics:
         # Initialize the gaming state
         self.game_state.state = self.game_state.menu_state
         # The replay button is also not initialized since it is a graphic that will be added when needed.
-        self.button = None
+        self.to_menu_button = None
+        self.to_game_button = None
 
     def draw_background(self):
         """
@@ -91,26 +92,30 @@ class Graphics:
         pg.draw.circle(self.screen, self.blue, (pos_x, pos_y), self.outer_circle_radius)
         pg.draw.circle(self.screen, self.black, (pos_x, pos_y), self.inner_circle_radius)
 
-    def draw_button(self, button_text, pos_x, pos_y):
+    def draw_button(self, button_text, color, pos_x, pos_y):
         """
         Draws a text that says "Click for new game" on the screen at position (pos_x, pos_y). The position is defined
         in pixels. The position is defined by the upper left corner of the text.
+        :param color: tuple,
         :param button_text: str, Text displayed on the button.
         :param pos_x: Int, x-coordinate of the upper left corner of the replay button.
         :param pos_y: Int, y-coordinate of the upper left corner of the replay button.
         :return: -
         """
-        self.button = self.screen.blit(self.game_font.render(button_text, True, self.red), (pos_x, pos_y))
+        button_graphic = self.game_font.render(button_text, True, color)
+        (button_graphic_width, button_graphic_height) = button_graphic.get_size()
+        return self.screen.blit(button_graphic, (round(pos_x - button_graphic_width/2), round(pos_y - button_graphic_height/2)))
 
-    def draw_string(self, string_to_draw, pos_x, pos_y):
+    def draw_string(self, string_to_draw, color, pos_x, pos_y):
         """
 
+        :param color:
         :param string_to_draw:
         :param pos_x:
         :param pos_y:
         :return:
         """
-        string_graphic = self.game_font.render(string_to_draw, True, self.white)
+        string_graphic = self.game_font.render(string_to_draw, True, color)
         (string_graphic_width, string_graphic_height) = string_graphic.get_size()
         self.screen.blit(string_graphic, (round(pos_x - string_graphic_width/2),
                                           round(pos_y - string_graphic_height/2)))
@@ -149,13 +154,16 @@ class Graphics:
             self.visualize_matrix()
         elif current_state == self.game_state.player1_won_state or current_state == self.game_state.player2_won_state or current_state == self.game_state.draw_state:
             # Check if the replay button was clicked
-            if self.button.collidepoint((pos_x, pos_y)):
+            if self.to_game_button.collidepoint((pos_x, pos_y)):
                 # If it is clicked, go back to the game and newly initialize the gaming state.
                 self.game_state.state = self.game_state.gaming_state
                 self.game_state.init_gaming_state()
                 self.game_state.state_changed_flag = True
+            elif self.to_menu_button.collidepoint((pos_x, pos_y)):
+                self.game_state.state = self.game_state.menu_state
+                self.game_state.state_changed_flag = True
         elif current_state == self.game_state.menu_state:
-            if self.button.collidepoint((pos_x, pos_y)):
+            if self.to_game_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.gaming_state
                 self.game_state.init_gaming_state()
                 self.game_state.state_changed_flag = True
@@ -191,25 +199,23 @@ class Graphics:
             # Gaming state.
             if self.game_state.get_state() == self.game_state.menu_state:
                 self.draw_background()
-                self.draw_button("Click here to play game.", 450, 450)
+                self.to_game_button = self.draw_button("Play game", self.white, self.screen_width/2, self.screen_height/2)
             elif self.game_state.get_state() == self.game_state.gaming_state:
                 print("Initialize gaming state.")
                 self.draw_background()
                 self.draw_grid()
-            # Player 1 has won.
-            elif self.game_state.get_state() == self.game_state.player1_won_state:
+            else:
                 self.draw_background()
-                self.draw_button("Click here to play a new game.", 25, 25)
-                self.draw_string("Player 1 has won.", self.screen_width/2, self.screen_height/2)
-            # Player 2 has won.
-            elif self.game_state.get_state() == self.game_state.player2_won_state:
-                self.draw_background()
-                self.draw_button("Click here to play a new game.", 25, 25)
-                self.draw_string("Player 2 has won.", self.screen_width/2, self.screen_height/2)
-            # Game ended with a draw.
-            elif self.game_state.get_state() == self.game_state.draw_state:
-                self.draw_background()
-                self.draw_button("Click here to play a new game.", 25, 25)
-                self.draw_string("Draw.", self.screen_width/2, self.screen_height/2)
+                self.to_game_button = self.draw_button("Click here to play a new game.", self.red, 167, 30)
+                self.to_menu_button = self.draw_button("Click here to go back to main menu", self.red, 190, 60)
+                # Player 1 has won.
+                if self.game_state.get_state() == self.game_state.player1_won_state:
+                    self.draw_string("Player 1 has won.", self.white, self.screen_width/2, self.screen_height/2)
+                # Player 2 has won.
+                elif self.game_state.get_state() == self.game_state.player2_won_state:
+                    self.draw_string("Player 2 has won.", self.white, self.screen_width/2, self.screen_height/2)
+                # Game ended with a draw.
+                elif self.game_state.get_state() == self.game_state.draw_state:
+                    self.draw_string("Draw.", self.white, self.screen_width/2, self.screen_height/2)
             # Toggle the flag back to the previous value.
             self.game_state.state_changed_flag = False
