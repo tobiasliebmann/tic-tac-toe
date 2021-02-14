@@ -4,6 +4,8 @@ import state_machine as sm
 
 import math as m
 
+import sys
+
 
 class Graphics:
 
@@ -51,6 +53,7 @@ class Graphics:
         self.to_game_button = None
         self.to_credits_button = None
         self.to_how_to_play_button = None
+        self.quit_button = None
         self.buttons = []
         self.cursor = pg.cursors.arrow
 
@@ -179,6 +182,9 @@ class Graphics:
                 self.game_state.state = self.game_state.how_to_play_state
             elif self.to_credits_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.credits_state
+            elif self.quit_button.collidepoint((pos_x, pos_y)):
+                pg.quit()
+                sys.exit()
         elif current_state == self.game_state.how_to_play_state:
             if self.to_menu_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.menu_state
@@ -239,7 +245,10 @@ class Graphics:
                                                                          self.screen_width/2, self.screen_height/2)
                 self.to_credits_button = self.draw_and_return_button("Credits", self.white,
                                                                         self.screen_width/2, self.screen_height/2 + 30)
-                self.buttons = [self.to_game_button, self.to_how_to_play_button, self.to_credits_button]
+                self.quit_button = self.draw_and_return_button("Quit", self.white, self.screen_width/2,
+                                                               self.screen_height/2 + 60)
+                self.buttons = [self.to_game_button, self.to_how_to_play_button, self.to_credits_button,
+                                self.quit_button]
             elif self.game_state.state == self.game_state.gaming_state:
                 self.draw_background()
                 self.draw_grid()
