@@ -156,7 +156,7 @@ class Graphics:
         row_index = m.trunc(3 * pos_y / self.screen_width)
         column_index = m.trunc(3 * pos_x / self.screen_height)
         # Check in which state the game is in.
-        current_state = self.game_state.get_state()
+        current_state = self.game_state.state
         if current_state == self.game_state.gaming_state:
             # Refresh the state and check whether a player has won or the game is s draw.
             self.game_state.add_new_marker(row_index, column_index)
@@ -175,9 +175,14 @@ class Graphics:
             if self.to_game_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.gaming_state
                 self.game_state.init_gaming_state()
-            if self.to_how_to_play_button.collidepoint((pos_x, pos_y)):
+            elif self.to_how_to_play_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.how_to_play_state
+            elif self.to_credits_button.collidepoint((pos_x, pos_y)):
+                self.game_state.state = self.game_state.credits_state
         elif current_state == self.game_state.how_to_play_state:
+            if self.to_menu_button.collidepoint((pos_x, pos_y)):
+                self.game_state.state = self.game_state.menu_state
+        elif current_state == self.game_state.credits_state:
             if self.to_menu_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.menu_state
 
@@ -202,6 +207,21 @@ class Graphics:
                 elif state_matrix[row_index, column_index] == self.game_state.player2_marker:
                     self.draw_circle(x, y)
 
+    def adjust_cursor(self):
+        """
+        Iterators through the list buttons and check if the mouse is at one of these buttons. If this is the case,
+        the cursor changes its image to a diamond.
+        :return: -
+        """
+        # If the mouse is hovering over a clickable button the cursor is changed to a diamond.
+        for b in self.buttons:
+            if b.collidepoint(pg.mouse.get_pos()):
+                self.cursor = pg.cursors.diamond
+                break
+            else:
+                self.cursor = pg.cursors.arrow
+        pg.mouse.set_cursor(self.cursor)
+
     def check_visuals(self):
         """
         This method changes the background according to the game state and only when the game state changes.
@@ -211,23 +231,44 @@ class Graphics:
         if self.game_state.get_state_changed_flag():
             self.buttons = []
             # Gaming state.
-            if self.game_state.get_state() == self.game_state.menu_state:
+            if self.game_state.state == self.game_state.menu_state:
                 self.draw_background()
                 self.to_game_button = self.draw_and_return_button("Play game", self.white, self.screen_width/2,
-                                                                  self.screen_height/2)
+                                                                  self.screen_height/2 - 30)
                 self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.white,
-                                                                         self.screen_width/2, self.screen_height/2 + 30)
-                self.buttons = [self.to_game_button, self.to_how_to_play_button]
-            elif self.game_state.get_state() == self.game_state.gaming_state:
+                                                                         self.screen_width/2, self.screen_height/2)
+                self.to_credits_button = self.draw_and_return_button("Credits", self.white,
+                                                                        self.screen_width/2, self.screen_height/2 + 30)
+                self.buttons = [self.to_game_button, self.to_how_to_play_button, self.to_credits_button]
+            elif self.game_state.state == self.game_state.gaming_state:
                 self.draw_background()
                 self.draw_grid()
-            elif self.game_state.get_state() == self.game_state.how_to_play_state:
+            elif self.game_state.state == self.game_state.how_to_play_state:
                 self.draw_background()
                 self.to_menu_button = self.draw_and_return_button("Click here to go back to main menu.",
                                                                   self.red, 190, 30)
                 self.buttons = [self.to_menu_button]
-                self.draw_string("The game is played by two players. Player 1 has the cross and the player 2\n "
-                                 + "the circles.", self.white, self.screen_width/2, self.screen_height/2)
+                self.draw_string("The game is played by two players. Player 1 has the cross and player 2",
+                                 self.white, self.screen_width/2, self.screen_height/2 - 30)
+                self.draw_string("has the circles. To place a marker just click on the screen.",
+                                 self.white, self.screen_width/2, self.screen_height/2)
+                self.draw_string("Player 1 always has the first move in the game. Have fun :)",
+                                 self.white, self.screen_width/2, self.screen_height/2 + 30)
+            elif self.game_state.state == self.game_state.credits_state:
+                self.draw_background()
+                self.to_menu_button = self.draw_and_return_button("Click here to go back to main menu.",
+                                                                  self.red, 190, 30)
+                self.buttons = [self.to_menu_button]
+                self.draw_string("Lead programmer - Tobias Liebmann",
+                                 self.white, self.screen_width/2, self.screen_height/2 - 60)
+                self.draw_string("Lead artist - Tobias Liebmann",
+                                 self.white, self.screen_width/2, self.screen_height/2 - 30)
+                self.draw_string("sound design - Tobias Liebmann",
+                                 self.white, self.screen_width/2, self.screen_height/2)
+                self.draw_string("executive producer - Tobias Liebmann",
+                                 self.white, self.screen_width/2, self.screen_height/2 + 30)
+                self.draw_string("A Tobias Liebmann production",
+                                 self.white, self.screen_width/2, self.screen_height/2 + 60)
             else:
                 self.draw_background()
                 self.to_game_button = self.draw_and_return_button("Click here to play a new game.", self.red, 164, 30)
@@ -235,20 +276,14 @@ class Graphics:
                                                                   190, 60)
                 self.buttons = [self.to_game_button, self.to_menu_button]
                 # Player 1 has won.
-                if self.game_state.get_state() == self.game_state.player1_won_state:
+                if self.game_state.state == self.game_state.player1_won_state:
                     self.draw_string("Player 1 has won.", self.white, self.screen_width/2, self.screen_height/2)
                 # Player 2 has won.
-                elif self.game_state.get_state() == self.game_state.player2_won_state:
+                elif self.game_state.state == self.game_state.player2_won_state:
                     self.draw_string("Player 2 has won.", self.white, self.screen_width/2, self.screen_height/2)
                 # Game ended with a draw.
-                elif self.game_state.get_state() == self.game_state.draw_state:
+                elif self.game_state.state == self.game_state.draw_state:
                     self.draw_string("Draw.", self.white, self.screen_width/2, self.screen_height/2)
             # Toggle the flag back to the previous value.
             self.game_state.state_changed_flag = False
-        for b in self.buttons:
-            if b.collidepoint(pg.mouse.get_pos()):
-                self.cursor = pg.cursors.diamond
-                break
-            else:
-                self.cursor = pg.cursors.arrow
-        pg.mouse.set_cursor(self.cursor)
+        self.adjust_cursor()
