@@ -52,6 +52,7 @@ class Graphics:
         self.to_credits_button = None
         self.to_how_to_play_button = None
         self.buttons = []
+        self.cursor = pg.cursors.arrow
 
     def draw_background(self):
         """
@@ -244,3 +245,10 @@ class Graphics:
                     self.draw_string("Draw.", self.white, self.screen_width/2, self.screen_height/2)
             # Toggle the flag back to the previous value.
             self.game_state.state_changed_flag = False
+        for b in self.buttons:
+            if b.collidepoint(pg.mouse.get_pos()):
+                self.cursor = pg.cursors.diamond
+                break
+            else:
+                self.cursor = pg.cursors.arrow
+        pg.mouse.set_cursor(self.cursor)
