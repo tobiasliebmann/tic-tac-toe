@@ -9,6 +9,8 @@ import sys
 
 class Graphics:
 
+    # The distance between vertical texts in the game so that they don't overlap.
+    vertical_text_distance = 40
     # Define the screen width as 900 pixels.
     screen_width = 900
     # Define the screen width as the screen height for a quadratic screen.
@@ -43,7 +45,8 @@ class Graphics:
         # Initialize the pygame screen.
         self.screen = pg.display.set_mode(self.screen_size)
         # Initialize the font
-        self.game_font = pg.font.SysFont("Comic Sans MS", 30)
+        self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 30)
+        self.title_font = pg.font.Font("fonts/ParkLaneNF.ttf", 146)
         # The game_state is a State object, which can be found in the file state_machine.py
         self.game_state = sm.State()
         # Initialize the gaming state
@@ -56,6 +59,7 @@ class Graphics:
         self.quit_button = None
         self.buttons = []
         self.cursor = pg.cursors.arrow
+        self.menu_background = pg.image.load("images/background_cropped.png")
 
     def draw_background(self):
         """
@@ -64,6 +68,12 @@ class Graphics:
         """
         pg.display.set_caption('Tic-Tac-Toe')
         self.screen.fill(self.black)
+
+    def draw_menu_background(self):
+        """
+        """
+        self.screen.blit(self.menu_background, (0, 0))
+
 
     def draw_grid(self):
         """
@@ -175,6 +185,7 @@ class Graphics:
             elif self.to_menu_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.menu_state
         elif current_state == self.game_state.menu_state:
+            self.draw_menu_background()
             if self.to_game_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.gaming_state
                 self.game_state.init_gaming_state()
@@ -238,15 +249,18 @@ class Graphics:
             self.buttons = []
             # Gaming state.
             if self.game_state.state == self.game_state.menu_state:
-                self.draw_background()
+                self.draw_menu_background()
+                title = self.title_font.render("Tic-Tac-Toe", True, self.white)
+                self.screen.blit(title, (30, 30))
                 self.to_game_button = self.draw_and_return_button("Play game", self.white, self.screen_width/2,
-                                                                  self.screen_height/2 - 30)
+                                                                  4*self.screen_height/7 - self.vertical_text_distance)
                 self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.white,
-                                                                         self.screen_width/2, self.screen_height/2)
-                self.to_credits_button = self.draw_and_return_button("Credits", self.white,
-                                                                        self.screen_width/2, self.screen_height/2 + 30)
+                                                                         self.screen_width/2, 4*self.screen_height/7)
+                self.to_credits_button = self.draw_and_return_button("Credits",
+                                                                     self.white, self.screen_width/2,
+                                                                     4*self.screen_height/7 + self.vertical_text_distance)
                 self.quit_button = self.draw_and_return_button("Quit", self.white, self.screen_width/2,
-                                                               self.screen_height/2 + 60)
+                                                               4*self.screen_height/7 + 2*self.vertical_text_distance)
                 self.buttons = [self.to_game_button, self.to_how_to_play_button, self.to_credits_button,
                                 self.quit_button]
             elif self.game_state.state == self.game_state.gaming_state:
@@ -258,26 +272,26 @@ class Graphics:
                                                                   self.red, 190, 30)
                 self.buttons = [self.to_menu_button]
                 self.draw_string("The game is played by two players. Player 1 has the cross and player 2",
-                                 self.white, self.screen_width/2, self.screen_height/2 - 30)
+                                 self.white, self.screen_width/2, self.screen_height/2 - self.vertical_text_distance)
                 self.draw_string("has the circles. To place a marker just click on the screen.",
                                  self.white, self.screen_width/2, self.screen_height/2)
                 self.draw_string("Player 1 always has the first move in the game. Have fun :)",
-                                 self.white, self.screen_width/2, self.screen_height/2 + 30)
+                                 self.white, self.screen_width/2, self.screen_height/2 + self.vertical_text_distance)
             elif self.game_state.state == self.game_state.credits_state:
                 self.draw_background()
                 self.to_menu_button = self.draw_and_return_button("Click here to go back to main menu.",
                                                                   self.red, 190, 30)
                 self.buttons = [self.to_menu_button]
                 self.draw_string("Lead programmer - Tobias Liebmann",
-                                 self.white, self.screen_width/2, self.screen_height/2 - 60)
+                                 self.white, self.screen_width/2, self.screen_height/2 - 2*self.vertical_text_distance)
                 self.draw_string("Lead artist - Tobias Liebmann",
-                                 self.white, self.screen_width/2, self.screen_height/2 - 30)
+                                 self.white, self.screen_width/2, self.screen_height/2 - self.vertical_text_distance)
                 self.draw_string("sound design - Tobias Liebmann",
                                  self.white, self.screen_width/2, self.screen_height/2)
                 self.draw_string("executive producer - Tobias Liebmann",
-                                 self.white, self.screen_width/2, self.screen_height/2 + 30)
+                                 self.white, self.screen_width/2, self.screen_height/2 + self.vertical_text_distance)
                 self.draw_string("A Tobias Liebmann production",
-                                 self.white, self.screen_width/2, self.screen_height/2 + 60)
+                                 self.white, self.screen_width/2, self.screen_height/2 + 2*self.vertical_text_distance)
             else:
                 self.draw_background()
                 self.to_game_button = self.draw_and_return_button("Click here to play a new game.", self.red, 164, 30)
