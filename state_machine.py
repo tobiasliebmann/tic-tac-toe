@@ -5,29 +5,32 @@ import functools as ft
 
 class State:
     # The current state of the system. There are four states.
-    # todo: 0 - Corresponds to the tart screen.
+    # 0 - Corresponds to the tart screen.
     # 1 - Corresponds to the actual game.
     # 2 - Player 1 has won.
     # 3 - Player 2 has won.
     # 4 - Game is a draw.
     menu_state = 0
-    gaming_state = 1
-    player1_won_state = 2
-    player2_won_state = 3
-    draw_state = 4
+    how_to_play_state = 1
+    credits_state = 2
+    gaming_state = 3
+    player1_won_state = 4
+    player2_won_state = 5
+    draw_state = 6
 
-    allowed_states = (menu_state, gaming_state, player1_won_state, player2_won_state, draw_state)
+    allowed_states = (menu_state, how_to_play_state, credits_state, gaming_state, player1_won_state,
+                      player2_won_state, draw_state)
 
     # Markers for the players that are used in the state matrix.
     player1_marker = 1
     player2_marker = -1
-    not_set_marker = 0
+    empty_field_marker = 0
 
-    allowed_markers = (player2_marker, not_set_marker, player1_marker)
+    allowed_markers = (player2_marker, empty_field_marker, player1_marker)
 
     def __init__(self):
-        # Initialize the game in the gaming state
-        self._state = self.gaming_state
+        # Initialize the game in the menu state.
+        self._state = self.menu_state
         # Flag which is raised when a state is changed for the first time
         self._state_changed_flag = True
         # The current turn in the tic-tac-toe game.
@@ -54,6 +57,7 @@ class State:
     def set_state(self, new_state):
         if new_state in self.allowed_states:
             self._state = new_state
+            self._state_changed_flag = True
         else:
             raise ValueError("The new state has to be on of the following values"+str(self.allowed_states)+".")
 
@@ -86,7 +90,8 @@ class State:
         :return:
         """
         # Checks if the entries of the state matrix are either -1, 0 or 1 by using the reduce function of functools.
-        check_matrix_vals = ft.reduce(lambda x, y: (x in self.allowed_markers) and (y in self.allowed_markers), new_state_matrix.reshape(9), True)
+        check_matrix_vals = ft.reduce(lambda x, y: (x in self.allowed_markers) and (y in self.allowed_markers),
+                                      new_state_matrix.reshape(9), True)
         # Check the if the matrix is 3x3 and if it has the correct entries.
         if new_state_matrix.shape == (3, 3) and check_matrix_vals:
             self._state_matrix = new_state_matrix
@@ -189,7 +194,7 @@ class State:
         """
         self.state = self.gaming_state
         self.turn = 1
-        self.state_matrix = np.full((3, 3), self.not_set_marker)
+        self.state_matrix = np.full((3, 3), self.empty_field_marker)
         self.player1_win_flag = False
         self.player2_win_flag = False
         self.draw_flag = False
@@ -200,7 +205,7 @@ class State:
         grid.
         :return:
         """
-        if self.state_matrix[row_index][column_index] == self.not_set_marker:
+        if self.state_matrix[row_index][column_index] == self.empty_field_marker:
             if self.turn % 2 != 0:
                 self.set_state_matrix_component(row_index, column_index, self.player1_marker)
             else:

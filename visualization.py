@@ -49,6 +49,8 @@ class Graphics:
         # The replay button is also not initialized since it is a graphic that will be added when needed.
         self.to_menu_button = None
         self.to_game_button = None
+        self.to_credits_button = None
+        self.to_how_to_play_button = None
 
     def draw_background(self):
         """
@@ -97,7 +99,7 @@ class Graphics:
         pg.draw.circle(self.screen, self.blue, (pos_x, pos_y), self.outer_circle_radius)
         pg.draw.circle(self.screen, self.black, (pos_x, pos_y), self.inner_circle_radius)
 
-    def draw_button(self, button_text, color, pos_x, pos_y):
+    def draw_and_return_button(self, button_text, color, pos_x, pos_y):
         """
         Draws a text that says "Click for new game" on the screen at position (pos_x, pos_y). The position is defined
         in pixels. The position is defined by the upper left corner of the text.
@@ -109,7 +111,8 @@ class Graphics:
         """
         button_graphic = self.game_font.render(button_text, True, color)
         (button_graphic_width, button_graphic_height) = button_graphic.get_size()
-        return self.screen.blit(button_graphic, (round(pos_x - button_graphic_width/2), round(pos_y - button_graphic_height/2)))
+        return self.screen.blit(button_graphic, (round(pos_x - button_graphic_width/2),
+                                                 round(pos_y - button_graphic_height/2)))
 
     def draw_string(self, string_to_draw, color, pos_x, pos_y):
         """
@@ -157,21 +160,24 @@ class Graphics:
             self.game_state.add_new_marker(row_index, column_index)
             # Visualize the state matrix.
             self.visualize_matrix()
-        elif current_state == self.game_state.player1_won_state or current_state == self.game_state.player2_won_state or current_state == self.game_state.draw_state:
+        elif current_state == self.game_state.player1_won_state or current_state == self.game_state.player2_won_state \
+                or current_state == self.game_state.draw_state:
             # Check if the replay button was clicked
             if self.to_game_button.collidepoint((pos_x, pos_y)):
                 # If it is clicked, go back to the game and newly initialize the gaming state.
                 self.game_state.state = self.game_state.gaming_state
                 self.game_state.init_gaming_state()
-                self.game_state.state_changed_flag = True
             elif self.to_menu_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.menu_state
-                self.game_state.state_changed_flag = True
         elif current_state == self.game_state.menu_state:
             if self.to_game_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.gaming_state
                 self.game_state.init_gaming_state()
-                self.game_state.state_changed_flag = True
+            if self.to_how_to_play_button.collidepoint((pos_x, pos_y)):
+                self.game_state.state = self.game_state.how_to_play_state
+        elif current_state == self.game_state.how_to_play_state:
+            if self.to_menu_button.collidepoint((pos_x, pos_y)):
+                self.game_state.state = self.game_state.menu_state
 
     def visualize_matrix(self):
         """
@@ -204,15 +210,22 @@ class Graphics:
             # Gaming state.
             if self.game_state.get_state() == self.game_state.menu_state:
                 self.draw_background()
-                self.to_game_button = self.draw_button("Play game", self.white, self.screen_width/2, self.screen_height/2)
+                self.to_game_button = self.draw_and_return_button("Play game", self.white, self.screen_width/2,
+                                                                  self.screen_height/2)
+                self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.white,
+                                                                         self.screen_width/2, self.screen_height/2 + 30)
             elif self.game_state.get_state() == self.game_state.gaming_state:
-                print("Initialize gaming state.")
                 self.draw_background()
                 self.draw_grid()
+            elif self.game_state.get_state() == self.game_state.how_to_play_state:
+                self.draw_background()
+                self.to_menu_button = self.draw_and_return_button("Click here to go back to main menu.",
+                                                                  self.red, 190, 30)
             else:
                 self.draw_background()
-                self.to_game_button = self.draw_button("Click here to play a new game.", self.red, 167, 30)
-                self.to_menu_button = self.draw_button("Click here to go back to main menu.", self.red, 190, 60)
+                self.to_game_button = self.draw_and_return_button("Click here to play a new game.", self.red, 164, 30)
+                self.to_menu_button = self.draw_and_return_button("Click here to go back to main menu.", self.red,
+                                                                  190, 60)
                 # Player 1 has won.
                 if self.game_state.get_state() == self.game_state.player1_won_state:
                     self.draw_string("Player 1 has won.", self.white, self.screen_width/2, self.screen_height/2)
