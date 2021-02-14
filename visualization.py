@@ -28,6 +28,11 @@ class Graphics:
     red = (255, 0, 0)
     green = (0, 255, 0)
     blue = (0, 0, 255)
+    orange = (255, 128, 0)
+    purple = (128, 0, 255)
+    yellow = (255, 255, 0)
+    pink = (255, 0, 128)
+    teal = (0, 255, 255)
 
     # Init method.
     def __init__(self):
@@ -207,7 +212,7 @@ class Graphics:
             else:
                 self.draw_background()
                 self.to_game_button = self.draw_button("Click here to play a new game.", self.red, 167, 30)
-                self.to_menu_button = self.draw_button("Click here to go back to main menu", self.red, 190, 60)
+                self.to_menu_button = self.draw_button("Click here to go back to main menu.", self.red, 190, 60)
                 # Player 1 has won.
                 if self.game_state.get_state() == self.game_state.player1_won_state:
                     self.draw_string("Player 1 has won.", self.white, self.screen_width/2, self.screen_height/2)
