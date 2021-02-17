@@ -8,7 +8,6 @@ import sys
 
 
 class Graphics:
-
     # The distance between vertical texts in the game so that they don't overlap.
     vertical_text_distance = 60
     # Define the screen width as 900 pixels.
@@ -62,7 +61,7 @@ class Graphics:
         self.menu_background = pg.image.load("images/background_cropped.png")
 
     # todo: Add method to change the font size or add the font size to the draw string method.
-    # todo: Make the on_click and check_visuals method more orderly.
+    # todo: Make the on_click and check_visuals method more orderly. Add methods that draw the individual game states.
 
     def draw_background(self):
         """
@@ -76,7 +75,6 @@ class Graphics:
         """
         """
         self.screen.blit(self.menu_background, (0, 0))
-
 
     def draw_grid(self):
         """
@@ -129,8 +127,8 @@ class Graphics:
         """
         button_graphic = self.game_font.render(button_text, True, color)
         (button_graphic_width, button_graphic_height) = button_graphic.get_size()
-        return self.screen.blit(button_graphic, (round(pos_x - button_graphic_width/2),
-                                                 round(pos_y - button_graphic_height/2)))
+        return self.screen.blit(button_graphic, (round(pos_x - button_graphic_width / 2),
+                                                 round(pos_y - button_graphic_height / 2)))
 
     def draw_string(self, string_to_draw, color, pos_x, pos_y):
         """
@@ -143,8 +141,8 @@ class Graphics:
         """
         string_graphic = self.game_font.render(string_to_draw, True, color)
         (string_graphic_width, string_graphic_height) = string_graphic.get_size()
-        self.screen.blit(string_graphic, (round(pos_x - string_graphic_width/2),
-                                          round(pos_y - string_graphic_height/2)))
+        self.screen.blit(string_graphic, (round(pos_x - string_graphic_width / 2),
+                                          round(pos_y - string_graphic_height / 2)))
 
     def convert_indices_to_drawing_position(self, row_index, column_index):
         """
@@ -258,16 +256,16 @@ class Graphics:
                 self.draw_menu_background()
                 title = self.title_font.render("Tic-Tac-Toe", True, self.white)
                 self.screen.blit(title, (220, 5))
-                text_vertical_middle = 6*self.screen_height/11
-                self.to_game_button = self.draw_and_return_button("Play game", self.white, self.screen_width/2,
+                text_vertical_middle = 6 * self.screen_height / 11
+                self.to_game_button = self.draw_and_return_button("Play game", self.white, self.screen_width / 2,
                                                                   text_vertical_middle - self.vertical_text_distance)
                 self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.white,
-                                                                         self.screen_width/2, text_vertical_middle)
+                                                                         self.screen_width / 2, text_vertical_middle)
                 self.to_credits_button = self.draw_and_return_button("Credits",
-                                                                     self.white, self.screen_width/2,
+                                                                     self.white, self.screen_width / 2,
                                                                      text_vertical_middle + self.vertical_text_distance)
-                self.quit_button = self.draw_and_return_button("Quit", self.white, self.screen_width/2,
-                                                               text_vertical_middle + 2*self.vertical_text_distance)
+                self.quit_button = self.draw_and_return_button("Quit", self.white, self.screen_width / 2,
+                                                               text_vertical_middle + 2 * self.vertical_text_distance)
                 self.buttons = [self.to_game_button, self.to_how_to_play_button, self.to_credits_button,
                                 self.quit_button]
             elif self.game_state.state == self.game_state.gaming_state:
@@ -280,17 +278,22 @@ class Graphics:
                 self.buttons = [self.to_menu_button]
                 self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 32)
                 self.draw_string("The game is played by two players.",
-                                 self.white, self.screen_width/2, self.screen_height/2 - 3*self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 - 3 * self.vertical_text_distance)
                 self.draw_string("Player 1 has the cross and player 2",
-                                  self.white, self.screen_width/2, self.screen_height/2 - 2*self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 - 2 * self.vertical_text_distance)
                 self.draw_string("has the circles. To place a marker",
-                                 self.white, self.screen_width/2, self.screen_height/2 - self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 - self.vertical_text_distance)
                 self.draw_string("just click on the screen. Player 1",
-                                 self.white, self.screen_width/2, self.screen_height/2)
+                                 self.white, self.screen_width / 2, self.screen_height / 2)
                 self.draw_string("always has the first move in the game.",
-                                 self.white, self.screen_width/2, self.screen_height/2 + self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 + self.vertical_text_distance)
                 self.draw_string("Have fun :)",
-                                self.white, self.screen_width/2, self.screen_height/2 + 2*self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 + 2 * self.vertical_text_distance)
 
                 self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
             elif self.game_state.state == self.game_state.credits_state:
@@ -300,17 +303,23 @@ class Graphics:
                 self.buttons = [self.to_menu_button]
                 self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 32)
                 self.draw_string("Lead programmer - Tobias Liebmann",
-                                 self.white, self.screen_width/2, self.screen_height/2 - 2*self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 - 2 * self.vertical_text_distance)
                 self.draw_string("Lead artist - Tobias Liebmann",
-                                 self.white, self.screen_width/2, self.screen_height/2 - self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 - self.vertical_text_distance)
                 self.draw_string("sound design - Tobias Liebmann",
-                                 self.white, self.screen_width/2, self.screen_height/2)
+                                 self.white, self.screen_width / 2, self.screen_height / 2)
                 self.draw_string("executive producer - Tobias Liebmann",
-                                 self.white, self.screen_width/2, self.screen_height/2 + self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 + self.vertical_text_distance)
                 self.draw_string("A Tobias Liebmann production",
-                                 self.white, self.screen_width/2, self.screen_height/2 + 2*self.vertical_text_distance)
+                                 self.white, self.screen_width / 2,
+                                 self.screen_height / 2 + 2 * self.vertical_text_distance)
                 self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
             else:
+                # Add a little delay so that the change to the winning screen is not to abrupt.
+                pg.time.delay(500)
                 self.draw_background()
                 self.to_game_button = self.draw_and_return_button("New game", self.red, 150, 40)
                 self.to_menu_button = self.draw_and_return_button("Main menu", self.red,
@@ -319,15 +328,15 @@ class Graphics:
                 self.buttons = [self.to_game_button, self.to_menu_button, self.quit_button]
                 # Player 1 has won.
                 if self.game_state.state == self.game_state.player1_won_state:
-                    self.draw_string("Player 1 has won.", self.white, self.screen_width/2, self.screen_height/2)
+                    self.draw_string("Player 1 has won.", self.white, self.screen_width / 2, self.screen_height / 2)
                     self.game_state.player1_win_flag = False
                 # Player 2 has won.
                 elif self.game_state.state == self.game_state.player2_won_state:
-                    self.draw_string("Player 2 has won.", self.white, self.screen_width/2, self.screen_height/2)
+                    self.draw_string("Player 2 has won.", self.white, self.screen_width / 2, self.screen_height / 2)
                     self.game_state.player2_win_flag = False
                 # Game ended with a draw.
                 elif self.game_state.state == self.game_state.draw_state:
-                    self.draw_string("Draw.", self.white, self.screen_width/2, self.screen_height/2)
+                    self.draw_string("Draw.", self.white, self.screen_width / 2, self.screen_height / 2)
                     self.game_state.draw_flag = False
             # Toggle the flag back to the previous value.
             self.game_state.state_changed_flag = False
