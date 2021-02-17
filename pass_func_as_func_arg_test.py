@@ -39,6 +39,7 @@ my_button.draw_button()
 my_button2.draw_button()
 
 while 1:
+    pg.time.delay(1)
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
@@ -47,4 +48,4 @@ while 1:
     my_button2.listener()
     # Update the screen.
     pg.display.flip()
-    pg.time.delay(5)
+
