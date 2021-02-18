@@ -124,8 +124,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-283.57143"
-     inkscape:cy="514.28571"
+     inkscape:cx="-942.14286"
+     inkscape:cy="508.57142"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -161,7 +161,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -172,8 +172,8 @@
     <g
        id="g5765"
        inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/marker1_alt.png"
-       inkscape:export-xdpi="112"
-       inkscape:export-ydpi="112">
+       inkscape:export-xdpi="32.142857"
+       inkscape:export-ydpi="32.142857">
       <rect
          transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"
          y="499.15219"
@@ -250,8 +250,8 @@
     <g
        id="g5805"
        inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/marker1.png"
-       inkscape:export-xdpi="112"
-       inkscape:export-ydpi="112">
+       inkscape:export-xdpi="32.142857"
+       inkscape:export-ydpi="32.142857">
       <rect
          style="opacity:0.98000004;fill:url(#linearGradient5745);fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:5.01421595;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
          id="rect4193"

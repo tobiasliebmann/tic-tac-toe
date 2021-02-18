@@ -19,11 +19,16 @@ class Graphics:
 
     # Define the length of an X graphic from the top corners to each other. This defines a square where X is then
     # defined by the diagonals.
-    cross_length = screen_width / 3
+    cross_length = 250
+
+    # the thickness of the lines making up the grid in pixels.
+    grid_thickness = 68
 
     # The inner and outer radii of the circles defining the o marker.
     outer_circle_radius = screen_width / 7
     inner_circle_radius = screen_width / 8
+
+    circle_length = 250
 
     # Defining RGB colors as tuples.
     white = (255, 255, 255)
@@ -59,9 +64,20 @@ class Graphics:
         self.buttons = []
         self.cursor = pg.cursors.arrow
         self.menu_background = pg.image.load("images/background_cropped.png")
+        self.grid = pg.image.load("images/grid.png")
+        self.cross = pg.image.load("images/marker2.png")
+        self.circle = pg.image.load("images/marker1.png")
 
     # todo: Add method to change the font size or add the font size to the draw string method.
     # todo: Make the on_click and check_visuals method more orderly. Add methods that draw the individual game states.
+
+    def draw_grid(self):
+        """
+
+        :return:
+        """
+        self.screen.fill((190, 190, 190))
+        self.screen.blit(self.grid, (0, 0))
 
     def draw_background(self):
         """
@@ -76,19 +92,6 @@ class Graphics:
         """
         self.screen.blit(self.menu_background, (0, 0))
 
-    def draw_grid(self):
-        """
-        Draws a white grid dividing the screen into nine equally large parts.
-        :return: -
-        """
-        # Draw 3x3-grid for tic-tac-toe
-        pg.draw.line(self.screen, self.white, (0, self.screen_height / 3), (self.screen_width, self.screen_height / 3))
-        pg.draw.line(self.screen, self.white, (0, 2 * self.screen_height / 3),
-                     (self.screen_width, 2 * self.screen_height / 3))
-        pg.draw.line(self.screen, self.white, (self.screen_width / 3, 0), (self.screen_width / 3, self.screen_height))
-        pg.draw.line(self.screen, self.white, (2 * self.screen_width / 3, 0),
-                     (2 * self.screen_width / 3, self.screen_height))
-
     def draw_cross(self, pos_x, pos_y):
         """
         Draws a green cross in X-form with the middle of the cross being at (pos_x, pos_y)
@@ -96,12 +99,14 @@ class Graphics:
         :param pos_y: y coordinate of the middle of the cross.
         :return: -
         """
+
+        self.screen.blit(self.cross, (pos_x - self.cross_length/2, pos_y - self.cross_length/2))
         # Draw first line.
-        pg.draw.line(self.screen, self.green, (pos_x - self.cross_length / 2, pos_y - self.cross_length / 2),
-                     (pos_x + self.cross_length / 2, pos_y + self.cross_length / 2))
+        # pg.draw.line(self.screen, self.green, (pos_x - self.cross_length / 2, pos_y - self.cross_length / 2),
+        #             (pos_x + self.cross_length / 2, pos_y + self.cross_length / 2))
         # Draw first line.
-        pg.draw.line(self.screen, self.green, (pos_x + self.cross_length / 2, pos_y - self.cross_length / 2),
-                     (pos_x - self.cross_length / 2, pos_y + self.cross_length / 2))
+        # pg.draw.line(self.screen, self.green, (pos_x + self.cross_length / 2, pos_y - self.cross_length / 2),
+        #            (pos_x - self.cross_length / 2, pos_y + self.cross_length / 2))
 
     def draw_circle(self, pos_x, pos_y):
         """
@@ -151,8 +156,10 @@ class Graphics:
         :param column_index: column index of a state matrix. Possible values are 0,1 or 2
         :return: The according position on the screen
         """
-        return (self.screen_width * column_index / 3 + self.screen_width / 6,
-                self.screen_height * row_index / 3 + self.screen_height / 6)
+        return ((self.screen_width / 3 + self.grid_thickness / 4) * column_index  + self.screen_width / 6
+                - self.grid_thickness / 4,
+                (self.screen_height / 3 + self.grid_thickness / 4) * row_index+ self.screen_height / 6
+                - self.grid_thickness / 4)
 
     def on_click(self, pos_x, pos_y):
         """
