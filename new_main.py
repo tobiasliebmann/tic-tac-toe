@@ -29,7 +29,5 @@ while 1:
     pg.display.flip()
     # If the game ended add a short delay
     # print(my_game.game_state.draw_flag)
-    # if my_game.game_state.player2_win_flag or my_game.game_state.player1_win_flag or my_game.game_state.draw_flag:
-        # pg.time.delay(500)
     # If the game did not end, add a delay so that the CPU is not occupied all the time.
     pg.time.delay(5)
