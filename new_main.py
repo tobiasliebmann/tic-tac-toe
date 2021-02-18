@@ -13,7 +13,7 @@ my_game = visu.Graphics()
 # Game loop.
 while 1:
     # Check if the visuals correspond to the right state.
-    my_game.check_visuals()
+    my_game.check_state()
     # Check for events in the event que.
     for event in pg.event.get():
         # Check if the game was quit.

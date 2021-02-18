@@ -50,6 +50,8 @@ class Graphics:
         pg.init()
         # Initialize the pygame screen.
         self.screen = pg.display.set_mode(self.screen_size)
+        # Set the caption for the pygame, that pops up on the screen.
+        pg.display.set_caption('Tic-Tac-Toe')
         # Initialize the font
         self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
         self.title_font = pg.font.Font("fonts/ParkLaneNF.ttf", 80)
@@ -73,9 +75,6 @@ class Graphics:
         self.cross = pg.image.load("images/marker2.png")
         self.circle = pg.image.load("images/marker1.png")
 
-    # todo: Add method to change the font size or add the font size to the draw string method.
-    # todo: Make the on_click and check_visuals method more orderly. Add methods that draw the individual game states.
-
     def draw_grid(self):
         """
 
@@ -89,13 +88,7 @@ class Graphics:
         Draws a black background and a "Tic-Tac_toe" caption on the screen.
         :return: -
         """
-        pg.display.set_caption('Tic-Tac-Toe')
         self.screen.fill(self.black)
-
-    def draw_menu_background(self):
-        """
-        """
-        self.screen.blit(self.menu_background, (0, 0))
 
     def draw_cross(self, pos_x, pos_y):
         """
@@ -184,7 +177,6 @@ class Graphics:
             if self.to_game_button.collidepoint((pos_x, pos_y)):
                 # If it is clicked, go back to the game and newly initialize the gaming state.
                 self.game_state.state = self.game_state.gaming_state
-                self.game_state.init_gaming_state()
             elif self.to_menu_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.menu_state
             elif self.quit_button.collidepoint((pos_x, pos_y)):
@@ -194,7 +186,6 @@ class Graphics:
             # self.draw_menu_background()
             if self.to_game_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.gaming_state
-                self.game_state.init_gaming_state()
             elif self.to_how_to_play_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.how_to_play_state
             elif self.to_credits_button.collidepoint((pos_x, pos_y)):
@@ -245,7 +236,119 @@ class Graphics:
                 self.cursor = pg.cursors.arrow
         pg.mouse.set_cursor(self.cursor)
 
-    def check_visuals(self):
+    def init_menu(self):
+        """
+
+        :return:
+        """
+        # Draw the background for the menu.
+        self.screen.blit(self.menu_background, (0, 0))
+        title = self.title_font.render("Tic-Tac-Toe", True, self.white)
+        self.screen.blit(title, (220, 5))
+        text_vertical_middle = 6 * self.screen_height / 11
+        self.to_game_button = self.draw_and_return_button("Play game", self.white, self.screen_width / 2,
+                                                          text_vertical_middle - self.vertical_text_distance)
+        self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.white,
+                                                                 self.screen_width / 2, text_vertical_middle)
+        self.to_credits_button = self.draw_and_return_button("Credits",
+                                                             self.white, self.screen_width / 2,
+                                                             text_vertical_middle + self.vertical_text_distance)
+        self.quit_button = self.draw_and_return_button("Quit", self.white, self.screen_width / 2,
+                                                       text_vertical_middle + 2 * self.vertical_text_distance)
+        self.buttons = [self.to_game_button, self.to_how_to_play_button, self.to_credits_button,
+                        self.quit_button]
+
+    def init_game(self):
+        """
+
+        :return:
+        """
+        self.game_state.init_gaming_state()
+        self.screen.fill((190, 190, 190))
+        self.screen.blit(self.grid, (0, 0))
+
+    def init_how_to_play(self):
+        """
+
+        :return:
+        """
+        self.screen.blit(self.how_to_play_background, (0, 0))
+        self.to_menu_button = self.draw_and_return_button("Main menu",
+                                                          self.red, 150, 40)
+        self.buttons = [self.to_menu_button]
+        self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 32)
+        self.draw_string("The game is played by two players.",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 - 3 * self.vertical_text_distance)
+        self.draw_string("Player 1 has the cross and player 2",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 - 2 * self.vertical_text_distance)
+        self.draw_string("has the circles. To place a marker",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 - self.vertical_text_distance)
+        self.draw_string("just click on the screen. Player 1",
+                         self.white, self.screen_width / 2, self.screen_height / 2)
+        self.draw_string("always has the first move in the game.",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 + self.vertical_text_distance)
+        self.draw_string("Have fun :)",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 + 2 * self.vertical_text_distance)
+        self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
+
+    def init_credits(self):
+        """
+
+        :return:
+        """
+        self.screen.blit(self.credits_background, (0, 0))
+        self.to_menu_button = self.draw_and_return_button("Main menu",
+                                                          self.red, 150, 40)
+        self.buttons = [self.to_menu_button]
+        self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 32)
+        self.draw_string("Lead programmer - Tobias Liebmann",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 - 2 * self.vertical_text_distance)
+        self.draw_string("Lead artist - Tobias Liebmann",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 - self.vertical_text_distance)
+        self.draw_string("sound design - Tobias Liebmann",
+                         self.white, self.screen_width / 2, self.screen_height / 2)
+        self.draw_string("executive producer - Tobias Liebmann",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 + self.vertical_text_distance)
+        self.draw_string("A Tobias Liebmann production",
+                         self.white, self.screen_width / 2,
+                         self.screen_height / 2 + 2 * self.vertical_text_distance)
+        self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
+
+    def init_game_over(self):
+        """
+
+        :return:
+        """
+        # Add a little delay so that the change to the winning screen is not to abrupt.
+        pg.time.delay(500)
+        self.screen.blit(self.game_over_background, (0, 0))
+        self.to_game_button = self.draw_and_return_button("New game", self.red, 150, 40)
+        self.to_menu_button = self.draw_and_return_button("Main menu", self.red,
+                                                          156, 40 + self.vertical_text_distance)
+        self.quit_button = self.draw_and_return_button("Quit", self.red, 830, 40)
+        self.buttons = [self.to_game_button, self.to_menu_button, self.quit_button]
+        # Player 1 has won.
+        if self.game_state.state == self.game_state.player1_won_state:
+            self.draw_string("Player 1 has won.", self.white, self.screen_width / 2, self.screen_height / 2)
+            self.game_state.player1_win_flag = False
+        # Player 2 has won.
+        elif self.game_state.state == self.game_state.player2_won_state:
+            self.draw_string("Player 2 has won.", self.white, self.screen_width / 2, self.screen_height / 2)
+            self.game_state.player2_win_flag = False
+        # Game ended with a draw.
+        elif self.game_state.state == self.game_state.draw_state:
+            self.draw_string("Draw.", self.white, self.screen_width / 2, self.screen_height / 2)
+            self.game_state.draw_flag = False
+
+    def check_state(self):
         """
         This method changes the background according to the game state and only when the game state changes.
         :return: -
@@ -255,91 +358,15 @@ class Graphics:
             self.buttons = []
             # Gaming state.
             if self.game_state.state == self.game_state.menu_state:
-                self.draw_menu_background()
-                title = self.title_font.render("Tic-Tac-Toe", True, self.white)
-                self.screen.blit(title, (220, 5))
-                text_vertical_middle = 6 * self.screen_height / 11
-                self.to_game_button = self.draw_and_return_button("Play game", self.white, self.screen_width / 2,
-                                                                  text_vertical_middle - self.vertical_text_distance)
-                self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.white,
-                                                                         self.screen_width / 2, text_vertical_middle)
-                self.to_credits_button = self.draw_and_return_button("Credits",
-                                                                     self.white, self.screen_width / 2,
-                                                                     text_vertical_middle + self.vertical_text_distance)
-                self.quit_button = self.draw_and_return_button("Quit", self.white, self.screen_width / 2,
-                                                               text_vertical_middle + 2 * self.vertical_text_distance)
-                self.buttons = [self.to_game_button, self.to_how_to_play_button, self.to_credits_button,
-                                self.quit_button]
+                self.init_menu()
             elif self.game_state.state == self.game_state.gaming_state:
-                self.draw_background()
-                self.draw_grid()
+                self.init_game()
             elif self.game_state.state == self.game_state.how_to_play_state:
-                self.screen.blit(self.how_to_play_background, (0, 0))
-                self.to_menu_button = self.draw_and_return_button("Main menu",
-                                                                  self.red, 150, 40)
-                self.buttons = [self.to_menu_button]
-                self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 32)
-                self.draw_string("The game is played by two players.",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 - 3 * self.vertical_text_distance)
-                self.draw_string("Player 1 has the cross and player 2",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 - 2 * self.vertical_text_distance)
-                self.draw_string("has the circles. To place a marker",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 - self.vertical_text_distance)
-                self.draw_string("just click on the screen. Player 1",
-                                 self.white, self.screen_width / 2, self.screen_height / 2)
-                self.draw_string("always has the first move in the game.",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 + self.vertical_text_distance)
-                self.draw_string("Have fun :)",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 + 2 * self.vertical_text_distance)
-
-                self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
+                self.init_how_to_play()
             elif self.game_state.state == self.game_state.credits_state:
-                self.screen.blit(self.credits_background, (0, 0))
-                self.to_menu_button = self.draw_and_return_button("Main menu",
-                                                                  self.red, 150, 40)
-                self.buttons = [self.to_menu_button]
-                self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 32)
-                self.draw_string("Lead programmer - Tobias Liebmann",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 - 2 * self.vertical_text_distance)
-                self.draw_string("Lead artist - Tobias Liebmann",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 - self.vertical_text_distance)
-                self.draw_string("sound design - Tobias Liebmann",
-                                 self.white, self.screen_width / 2, self.screen_height / 2)
-                self.draw_string("executive producer - Tobias Liebmann",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 + self.vertical_text_distance)
-                self.draw_string("A Tobias Liebmann production",
-                                 self.white, self.screen_width / 2,
-                                 self.screen_height / 2 + 2 * self.vertical_text_distance)
-                self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
+                self.init_credits()
             else:
-                # Add a little delay so that the change to the winning screen is not to abrupt.
-                pg.time.delay(500)
-                self.screen.blit(self.game_over_background, (0, 0))
-                self.to_game_button = self.draw_and_return_button("New game", self.red, 150, 40)
-                self.to_menu_button = self.draw_and_return_button("Main menu", self.red,
-                                                                  156, 40 + self.vertical_text_distance)
-                self.quit_button = self.draw_and_return_button("Quit", self.red, 830, 40)
-                self.buttons = [self.to_game_button, self.to_menu_button, self.quit_button]
-                # Player 1 has won.
-                if self.game_state.state == self.game_state.player1_won_state:
-                    self.draw_string("Player 1 has won.", self.white, self.screen_width / 2, self.screen_height / 2)
-                    self.game_state.player1_win_flag = False
-                # Player 2 has won.
-                elif self.game_state.state == self.game_state.player2_won_state:
-                    self.draw_string("Player 2 has won.", self.white, self.screen_width / 2, self.screen_height / 2)
-                    self.game_state.player2_win_flag = False
-                # Game ended with a draw.
-                elif self.game_state.state == self.game_state.draw_state:
-                    self.draw_string("Draw.", self.white, self.screen_width / 2, self.screen_height / 2)
-                    self.game_state.draw_flag = False
+                self.init_game_over()
             # Toggle the flag back to the previous value.
             self.game_state.state_changed_flag = False
         self.adjust_cursor()
