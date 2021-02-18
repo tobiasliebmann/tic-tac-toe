@@ -43,6 +43,7 @@ class Graphics:
     yellow = (255, 255, 0)
     pink = (255, 0, 128)
     teal = (0, 255, 255)
+    text_color = white
 
     # Init method.
     def __init__(self):
@@ -71,6 +72,7 @@ class Graphics:
         self.how_to_play_background = pg.image.load("images/background3_cropped.png")
         self.credits_background = pg.image.load("images/background4_cropped.png")
         self.game_over_background = pg.image.load("images/background2_cropped.png")
+        self.game_background = pg.image.load("images/game_background.png")
         self.grid = pg.image.load("images/grid.png")
         self.cross = pg.image.load("images/marker2.png")
         self.circle = pg.image.load("images/marker1.png")
@@ -82,13 +84,6 @@ class Graphics:
         """
         self.screen.fill((190, 190, 190))
         self.screen.blit(self.grid, (0, 0))
-
-    def draw_background(self):
-        """
-        Draws a black background and a "Tic-Tac_toe" caption on the screen.
-        :return: -
-        """
-        self.screen.fill(self.black)
 
     def draw_cross(self, pos_x, pos_y):
         """
@@ -246,14 +241,14 @@ class Graphics:
         title = self.title_font.render("Tic-Tac-Toe", True, self.white)
         self.screen.blit(title, (220, 5))
         text_vertical_middle = 6 * self.screen_height / 11
-        self.to_game_button = self.draw_and_return_button("Play game", self.white, self.screen_width / 2,
+        self.to_game_button = self.draw_and_return_button("Play game", self.text_color, self.screen_width / 2,
                                                           text_vertical_middle - self.vertical_text_distance)
-        self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.white,
+        self.to_how_to_play_button = self.draw_and_return_button("How to play game", self.text_color,
                                                                  self.screen_width / 2, text_vertical_middle)
         self.to_credits_button = self.draw_and_return_button("Credits",
-                                                             self.white, self.screen_width / 2,
+                                                             self.text_color, self.screen_width / 2,
                                                              text_vertical_middle + self.vertical_text_distance)
-        self.quit_button = self.draw_and_return_button("Quit", self.white, self.screen_width / 2,
+        self.quit_button = self.draw_and_return_button("Quit", self.text_color, self.screen_width / 2,
                                                        text_vertical_middle + 2 * self.vertical_text_distance)
         self.buttons = [self.to_game_button, self.to_how_to_play_button, self.to_credits_button,
                         self.quit_button]
@@ -264,7 +259,9 @@ class Graphics:
         :return:
         """
         self.game_state.init_gaming_state()
-        self.screen.fill((190, 190, 190))
+        # self.screen.fill((190, 190, 190))
+        self.screen.fill(self.white)
+        self.screen.blit(self.game_background, (0, 0))
         self.screen.blit(self.grid, (0, 0))
 
     def init_how_to_play(self):
@@ -274,25 +271,25 @@ class Graphics:
         """
         self.screen.blit(self.how_to_play_background, (0, 0))
         self.to_menu_button = self.draw_and_return_button("Main menu",
-                                                          self.red, 150, 40)
+                                                          self.text_color, 150, 40)
         self.buttons = [self.to_menu_button]
         self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 32)
         self.draw_string("The game is played by two players.",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 - 3 * self.vertical_text_distance)
         self.draw_string("Player 1 has the cross and player 2",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 - 2 * self.vertical_text_distance)
         self.draw_string("has the circles. To place a marker",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 - self.vertical_text_distance)
         self.draw_string("just click on the screen. Player 1",
-                         self.white, self.screen_width / 2, self.screen_height / 2)
+                         self.text_color, self.screen_width / 2, self.screen_height / 2)
         self.draw_string("always has the first move in the game.",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 + self.vertical_text_distance)
         self.draw_string("Have fun :)",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 + 2 * self.vertical_text_distance)
         self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
 
@@ -303,22 +300,22 @@ class Graphics:
         """
         self.screen.blit(self.credits_background, (0, 0))
         self.to_menu_button = self.draw_and_return_button("Main menu",
-                                                          self.red, 150, 40)
+                                                          self.text_color, 150, 40)
         self.buttons = [self.to_menu_button]
         self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 32)
         self.draw_string("Lead programmer - Tobias Liebmann",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 - 2 * self.vertical_text_distance)
         self.draw_string("Lead artist - Tobias Liebmann",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 - self.vertical_text_distance)
         self.draw_string("sound design - Tobias Liebmann",
-                         self.white, self.screen_width / 2, self.screen_height / 2)
+                         self.text_color, self.screen_width / 2, self.screen_height / 2)
         self.draw_string("executive producer - Tobias Liebmann",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 + self.vertical_text_distance)
         self.draw_string("A Tobias Liebmann production",
-                         self.white, self.screen_width / 2,
+                         self.text_color, self.screen_width / 2,
                          self.screen_height / 2 + 2 * self.vertical_text_distance)
         self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
 
@@ -337,15 +334,15 @@ class Graphics:
         self.buttons = [self.to_game_button, self.to_menu_button, self.quit_button]
         # Player 1 has won.
         if self.game_state.state == self.game_state.player1_won_state:
-            self.draw_string("Player 1 has won.", self.white, self.screen_width / 2, self.screen_height / 2)
+            self.draw_string("Player 1 has won.", self.text_color, self.screen_width / 2, self.screen_height / 2)
             self.game_state.player1_win_flag = False
         # Player 2 has won.
         elif self.game_state.state == self.game_state.player2_won_state:
-            self.draw_string("Player 2 has won.", self.white, self.screen_width / 2, self.screen_height / 2)
+            self.draw_string("Player 2 has won.", self.text_color, self.screen_width / 2, self.screen_height / 2)
             self.game_state.player2_win_flag = False
         # Game ended with a draw.
         elif self.game_state.state == self.game_state.draw_state:
-            self.draw_string("Draw.", self.white, self.screen_width / 2, self.screen_height / 2)
+            self.draw_string("Draw.", self.text_color, self.screen_width / 2, self.screen_height / 2)
             self.game_state.draw_flag = False
 
     def check_state(self):
