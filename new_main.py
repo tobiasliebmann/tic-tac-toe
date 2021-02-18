@@ -27,7 +27,5 @@ while 1:
             my_game.on_click(pos_x, pos_y)
     # Update the screen.
     pg.display.flip()
-    # If the game ended add a short delay
-    # print(my_game.game_state.draw_flag)
     # If the game did not end, add a delay so that the CPU is not occupied all the time.
     pg.time.delay(5)
