@@ -19,6 +19,22 @@
   <defs
      id="defs4">
     <inkscape:path-effect
+       is_visible="true"
+       id="path-effect4205"
+       effect="spiro" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4201"
+       is_visible="true" />
+    <inkscape:path-effect
+       is_visible="true"
+       id="path-effect4198"
+       effect="spiro" />
+    <inkscape:path-effect
+       is_visible="true"
+       id="path-effect4195"
+       effect="spiro" />
+    <inkscape:path-effect
        effect="spiro"
        id="path-effect4267"
        is_visible="true" />
@@ -90,17 +106,21 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="100.41223"
-     inkscape:cy="4016.4703"
+     inkscape:zoom="0.7"
+     inkscape:cx="218.20556"
+     inkscape:cy="494.22729"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1027"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4168" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -109,7 +129,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -117,132 +137,160 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <path
+       inkscape:connector-curvature="0"
+       inkscape:original-d="m 0,763.5888 900,0"
+       inkscape:path-effect="#path-effect4178"
+       id="path4249"
+       d="m 0,763.5888 900,0"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:30;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 0,792.3622 900,0"
+       id="path4251"
+       inkscape:path-effect="#path-effect4175"
+       inkscape:original-d="m 0,792.3622 900,0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       inkscape:original-d="m 0,734.8154 900,0"
+       inkscape:path-effect="#path-effect4172"
+       id="path4253"
+       d="m 0,734.8154 900,0"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:30;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 0,441.5888 900,0"
+       id="path4136"
+       inkscape:path-effect="#path-effect4267"
+       inkscape:original-d="m 0,441.5888 900,0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       inkscape:original-d="m 0,470.3622 900,0"
+       inkscape:path-effect="#path-effect4264"
+       id="path4140"
+       d="m 0,470.3622 900,0"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 0,412.81542 900,0"
+       id="path4144"
+       inkscape:path-effect="#path-effect4261"
+       inkscape:original-d="m 0,412.81542 900,0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <g
-       id="g4273"
-       transform="translate(-189.90868,-4113.3412)"
-       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/gtid.png"
+       id="g4206"
+       transform="matrix(0,1,-1,0,930.91811,1213.6123)"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <path
          style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:30;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 0,1318.5888 900,0"
-         id="path4249"
-         inkscape:path-effect="#path-effect4178"
-         inkscape:original-d="m 0,1318.5888 900,0"
+         d="m -1061.2501,642.14472 899.99997,0"
+         id="path4190"
+         inkscape:path-effect="#path-effect4192"
+         inkscape:original-d="m -1061.2501,642.14472 899.99997,0"
          inkscape:connector-curvature="0" />
       <path
          inkscape:connector-curvature="0"
-         inkscape:original-d="m 0,1347.3622 900,0"
-         inkscape:path-effect="#path-effect4175"
-         id="path4251"
-         d="m 0,1347.3622 900,0"
+         inkscape:original-d="m -1061.2501,670.91811 899.99997,0"
+         inkscape:path-effect="#path-effect4196"
+         id="path4194"
+         d="m -1061.2501,670.91811 899.99997,0"
          style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 0,1289.8154 900,0"
-         id="path4253"
-         inkscape:path-effect="#path-effect4172"
-         inkscape:original-d="m 0,1289.8154 900,0"
+         d="m -1061.2501,613.37133 899.99997,0"
+         id="path4198"
+         inkscape:path-effect="#path-effect4200"
+         inkscape:original-d="m -1061.2501,613.37133 899.99997,0"
          inkscape:connector-curvature="0" />
-      <path
-         inkscape:connector-curvature="0"
-         inkscape:original-d="m 0,1018.5888 900,0"
-         inkscape:path-effect="#path-effect4267"
-         id="path4136"
-         d="m 0,1018.5888 900,0"
-         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:30;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <path
-         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 0,1047.3622 900,0"
-         id="path4140"
-         inkscape:path-effect="#path-effect4264"
-         inkscape:original-d="m 0,1047.3622 900,0"
-         inkscape:connector-curvature="0" />
-      <path
-         inkscape:connector-curvature="0"
-         inkscape:original-d="m 0,989.81542 900,0"
-         inkscape:path-effect="#path-effect4261"
-         id="path4144"
-         d="m 0,989.81542 900,0"
-         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <g
-         transform="matrix(0,1,-1,0,942.41811,1780.2633)"
-         id="g4206">
-        <path
-           inkscape:connector-curvature="0"
-           inkscape:original-d="m -1061.2501,642.14472 899.99997,0"
-           inkscape:path-effect="#path-effect4192"
-           id="path4190"
-           d="m -1061.2501,642.14472 899.99997,0"
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:30;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <path
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="m -1061.2501,670.91811 899.99997,0"
-           id="path4194"
-           inkscape:path-effect="#path-effect4196"
-           inkscape:original-d="m -1061.2501,670.91811 899.99997,0"
-           inkscape:connector-curvature="0" />
-        <path
-           inkscape:connector-curvature="0"
-           inkscape:original-d="m -1061.2501,613.37133 899.99997,0"
-           inkscape:path-effect="#path-effect4200"
-           id="path4198"
-           d="m -1061.2501,613.37133 899.99997,0"
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <path
-           inkscape:connector-curvature="0"
-           inkscape:original-d="m -1061.2501,642.14472 899.99997,0"
-           inkscape:path-effect="#path-effect4204"
-           id="path4202"
-           d="m -1061.2501,642.14472 899.99997,0"
-           style="fill:none;fill-rule:evenodd;stroke:#806600;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      </g>
-      <g
-         id="g4231"
-         transform="matrix(0,1,-1,0,1242.4181,1780.2633)">
-        <path
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:30;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="m -1061.2501,642.14472 899.99997,0"
-           id="path4233"
-           inkscape:path-effect="#path-effect4192"
-           inkscape:original-d="m -1061.2501,642.14472 899.99997,0"
-           inkscape:connector-curvature="0" />
-        <path
-           inkscape:connector-curvature="0"
-           inkscape:original-d="m -1061.2501,670.91811 899.99997,0"
-           inkscape:path-effect="#path-effect4196"
-           id="path4235"
-           d="m -1061.2501,670.91811 899.99997,0"
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-        <path
-           style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="m -1061.2501,613.37133 899.99997,0"
-           id="path4237"
-           inkscape:path-effect="#path-effect4200"
-           inkscape:original-d="m -1061.2501,613.37133 899.99997,0"
-           inkscape:connector-curvature="0" />
-        <path
-           style="fill:none;fill-rule:evenodd;stroke:#806600;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-           d="m -1061.2501,642.14472 899.99997,0"
-           id="path4239"
-           inkscape:path-effect="#path-effect4204"
-           inkscape:original-d="m -1061.2501,642.14472 899.99997,0"
-           inkscape:connector-curvature="0" />
-      </g>
-      <path
-         inkscape:connector-curvature="0"
-         inkscape:original-d="m 0,1018.5888 900,0"
-         inkscape:path-effect="#path-effect4258"
-         id="path4148"
-         d="m 0,1018.5888 900,0"
-         style="fill:none;fill-rule:evenodd;stroke:#806600;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       <path
          style="fill:none;fill-rule:evenodd;stroke:#806600;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-         d="m 0,1318.5888 900,0"
-         id="path4255"
-         inkscape:path-effect="#path-effect4169"
-         inkscape:original-d="m 0,1318.5888 900,0"
+         d="m -1061.2501,642.14472 899.99997,0"
+         id="path4202"
+         inkscape:path-effect="#path-effect4204"
+         inkscape:original-d="m -1061.2501,642.14472 899.99997,0"
          inkscape:connector-curvature="0" />
     </g>
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:30;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 610.77338,152.3622 0,900"
+       id="path4233"
+       inkscape:path-effect="#path-effect4205"
+       inkscape:original-d="m 610.77338,152.3622 0,900"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       inkscape:original-d="m 581.99999,152.3622 0,900"
+       inkscape:path-effect="#path-effect4201"
+       id="path4235"
+       d="m 581.99999,152.3622 0,900"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 639.54677,152.3622 0,900"
+       id="path4237"
+       inkscape:path-effect="#path-effect4198"
+       inkscape:original-d="m 639.54677,152.3622 0,900"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#806600;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 610.77338,152.3622 0,900"
+       id="path4239"
+       inkscape:path-effect="#path-effect4195"
+       inkscape:original-d="m 610.77338,152.3622 0,900"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#806600;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 0,441.5888 900,0"
+       id="path4148"
+       inkscape:path-effect="#path-effect4258"
+       inkscape:original-d="m 0,441.5888 900,0"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
+    <path
+       inkscape:connector-curvature="0"
+       inkscape:original-d="m 0,763.5888 900,0"
+       inkscape:path-effect="#path-effect4169"
+       id="path4255"
+       d="m 0,763.5888 900,0"
+       style="fill:none;fill-rule:evenodd;stroke:#806600;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       inkscape:export-filename="/home/tobias/Schreibtisch/tic-tac-toe/images/grid.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
 </svg>

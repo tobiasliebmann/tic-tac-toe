@@ -24,6 +24,12 @@ class Graphics:
     # the thickness of the lines making up the grid in pixels.
     grid_thickness = 68
 
+    # width of a box in the grid
+    grid_box_width = screen_width / 3 - 2*grid_thickness/3
+
+    # Height of a box in the grid.
+    grid_box_height = screen_height / 3 - 2*grid_thickness/3
+
     # The inner and outer radii of the circles defining the o marker.
     outer_circle_radius = screen_width / 7
     inner_circle_radius = screen_width / 8
@@ -156,10 +162,8 @@ class Graphics:
         :param column_index: column index of a state matrix. Possible values are 0,1 or 2
         :return: The according position on the screen
         """
-        return ((self.screen_width / 3 + self.grid_thickness / 4) * column_index  + self.screen_width / 6
-                - self.grid_thickness / 4,
-                (self.screen_height / 3 + self.grid_thickness / 4) * row_index+ self.screen_height / 6
-                - self.grid_thickness / 4)
+        return ((self.grid_box_width + self.grid_thickness) * column_index + self.grid_box_width/2,
+                (self.grid_box_height + self.grid_thickness) * row_index + self.grid_box_height/2)
 
     def on_click(self, pos_x, pos_y):
         """
