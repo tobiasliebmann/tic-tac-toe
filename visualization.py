@@ -17,10 +17,6 @@ class Graphics:
     # Define a tuple consisting of width and height.
     screen_size = (screen_height, screen_width)
 
-    # Define the length of an X graphic from the top corners to each other. This defines a square where X is then
-    # defined by the diagonals.
-    cross_length = 250
-
     # the thickness of the lines making up the grid in pixels.
     grid_thickness = 68
 
@@ -30,16 +26,16 @@ class Graphics:
     # Height of a box in the grid.
     grid_box_height = screen_height / 3 - 2*grid_thickness/3
 
-    # The inner and outer radii of the circles defining the o marker.
-    outer_circle_radius = screen_width / 7
-    inner_circle_radius = screen_width / 8
+    # The diameter of the "circle" marker.
+    circle_diameter = 250
 
-    circle_length = 250
+    # defined by the diagonals.
+    cross_length = 250
 
     # Defining RGB colors as tuples.
     white = (255, 255, 255)
     black = (0, 0, 0)
-    red = (255, 0, 0)
+    red = (165, 18, 32)
     green = (0, 255, 0)
     blue = (0, 0, 255)
     orange = (255, 128, 0)
@@ -70,6 +66,9 @@ class Graphics:
         self.buttons = []
         self.cursor = pg.cursors.arrow
         self.menu_background = pg.image.load("images/background_cropped.png")
+        self.how_to_play_background = pg.image.load("images/background3_cropped.png")
+        self.credits_background = pg.image.load("images/background4_cropped.png")
+        self.game_over_background = pg.image.load("images/background2_cropped.png")
         self.grid = pg.image.load("images/grid.png")
         self.cross = pg.image.load("images/marker2.png")
         self.circle = pg.image.load("images/marker1.png")
@@ -105,14 +104,7 @@ class Graphics:
         :param pos_y: y coordinate of the middle of the cross.
         :return: -
         """
-
         self.screen.blit(self.cross, (pos_x - self.cross_length/2, pos_y - self.cross_length/2))
-        # Draw first line.
-        # pg.draw.line(self.screen, self.green, (pos_x - self.cross_length / 2, pos_y - self.cross_length / 2),
-        #             (pos_x + self.cross_length / 2, pos_y + self.cross_length / 2))
-        # Draw first line.
-        # pg.draw.line(self.screen, self.green, (pos_x + self.cross_length / 2, pos_y - self.cross_length / 2),
-        #            (pos_x - self.cross_length / 2, pos_y + self.cross_length / 2))
 
     def draw_circle(self, pos_x, pos_y):
         """
@@ -123,8 +115,7 @@ class Graphics:
         :param pos_y: y coordinate of the center of the circle.
         :return:
         """
-        pg.draw.circle(self.screen, self.blue, (pos_x, pos_y), self.outer_circle_radius)
-        pg.draw.circle(self.screen, self.black, (pos_x, pos_y), self.inner_circle_radius)
+        self.screen.blit(self.circle, (pos_x - self.circle_diameter/2, pos_y - self.circle_diameter/2))
 
     def draw_and_return_button(self, button_text, color, pos_x, pos_y):
         """
@@ -200,7 +191,7 @@ class Graphics:
                 pg.quit()
                 sys.exit()
         elif current_state == self.game_state.menu_state:
-            self.draw_menu_background()
+            # self.draw_menu_background()
             if self.to_game_button.collidepoint((pos_x, pos_y)):
                 self.game_state.state = self.game_state.gaming_state
                 self.game_state.init_gaming_state()
@@ -283,7 +274,7 @@ class Graphics:
                 self.draw_background()
                 self.draw_grid()
             elif self.game_state.state == self.game_state.how_to_play_state:
-                self.draw_background()
+                self.screen.blit(self.how_to_play_background, (0, 0))
                 self.to_menu_button = self.draw_and_return_button("Main menu",
                                                                   self.red, 150, 40)
                 self.buttons = [self.to_menu_button]
@@ -308,7 +299,7 @@ class Graphics:
 
                 self.game_font = pg.font.Font("fonts/StandingRoomOnlyNF.ttf", 46)
             elif self.game_state.state == self.game_state.credits_state:
-                self.draw_background()
+                self.screen.blit(self.credits_background, (0, 0))
                 self.to_menu_button = self.draw_and_return_button("Main menu",
                                                                   self.red, 150, 40)
                 self.buttons = [self.to_menu_button]
@@ -331,7 +322,7 @@ class Graphics:
             else:
                 # Add a little delay so that the change to the winning screen is not to abrupt.
                 pg.time.delay(500)
-                self.draw_background()
+                self.screen.blit(self.game_over_background, (0, 0))
                 self.to_game_button = self.draw_and_return_button("New game", self.red, 150, 40)
                 self.to_menu_button = self.draw_and_return_button("Main menu", self.red,
                                                                   156, 40 + self.vertical_text_distance)
