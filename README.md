@@ -10,9 +10,11 @@ The sources for this game including the used python modules and the images can b
 
 ### Image sources
 These are the sources for the images used in the game.<br>
-<ul>
-<li>[Main menu background](https://wallpapercave.com/wp/wp2468562.jpg), accessed: 19.02.21, 15:00 o'clock</li>
-<li>[How to play background](https://www.amazon.co.uk/Bilderwelten-Non-woven-wallpaper-Landscape-Format/dp/B0842NGV5N), accessed: 19.02.21, 15:03 o'clock</li>
-<li>[Game over background](https://www.miltonandking.com/product/leopard-wallpaper/), accessed: 19.02.21, 15:05 o'clock</li>
-<li>[Credits backgrund](https://www.photomural.com/artdeco.html#/), accessed: 19.02.21, 15:06 o'clock</li>
-</ul>
+-[Main menu background](https://wallpapercave.com/wp/wp2468562.jpg), accessed: 19.02.21, 15:00 o'clock <br>
+-[How to play background](https://www.amazon.co.uk/Bilderwelten-Non-woven-wallpaper-Landscape-Format/dp/B0842NGV5N), accessed: 19.02.21, 15:03 o'clock <br>
+-[Game over background](https://www.miltonandking.com/product/leopard-wallpaper/), accessed: 19.02.21, 15:05 o'clock <br>
+-[Credits backgrund](https://www.photomural.com/artdeco.html#/), accessed: 19.02.21, 15:06 o'clock <br>
+
+###Libary sources
+These are the sources for the python libraries I used in the game.<br>
+https://github.com/python/cpython
