@@ -96,7 +96,7 @@ class State:
         check_matrix_vals = ft.reduce(lambda x, y: (x in self.allowed_markers) and (y in self.allowed_markers),
                                       new_state_matrix.reshape(9), True)
         # Check the if the matrix is 3x3 and if it has the correct entries.
-        if isinstance(new_state_matrix, int):
+        if isinstance(new_state_matrix, np.ndarray):
             if new_state_matrix.shape == (3, 3):
                 if check_matrix_vals:
                     self._state_matrix = new_state_matrix
