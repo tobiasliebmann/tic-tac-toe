@@ -96,10 +96,16 @@ class State:
         check_matrix_vals = ft.reduce(lambda x, y: (x in self.allowed_markers) and (y in self.allowed_markers),
                                       new_state_matrix.reshape(9), True)
         # Check the if the matrix is 3x3 and if it has the correct entries.
-        if new_state_matrix.shape == (3, 3) and check_matrix_vals:
-            self._state_matrix = new_state_matrix
+        if isinstance(new_state_matrix, int):
+            if new_state_matrix.shape == (3, 3):
+                if check_matrix_vals:
+                    self._state_matrix = new_state_matrix
+                else:
+                    raise ValueError("The entry's of the state matrix can only be -1, 0 or 1.")
+            else:
+                raise ValueError("The state matrix needs to be 3x3 numpy array.")
         else:
-            raise ValueError("The entry's of the state matrix can only be -1, 0 or 1.")
+            raise TypeError("The state matrix needs to ba a numpy array.")
 
     def get_player1_win_flag(self):
         return self._player1_win_flag
