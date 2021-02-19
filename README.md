@@ -1,6 +1,7 @@
 # tic-tac-toe
-Simple game of tic tac toe using the [pygame library](https://www.pygame.org/docs/). The game is represented by a 3x3 matrix which hidden in the background. The markers of the tic tac toe game are represented by a -1, 1 or 0. A -1 is a marker of player 2 and a 1 corresponds to player 2. A field which was not set yet is represented by a 0. 
+Simple game of tic tac toe using the [pygame library](https://www.pygame.org/docs/). The game is represented by a 3x3 matrix which hidden in the background. The markers of the tic tac toe game are represented by a -1, 1 or 0. A -1 is a marker of player 2 and a 1 corresponds to player 2. A field which was not set yet is represented by a 0. This is illustrated in the image below. 
 
+[Info](/images/github_image.png)
 
 
 The background image in the main menu is taken from: [https://wallpapercave.com/wp/wp2468562.jpg](https://wallpapercave.com/wp/wp2468562.jpg)
