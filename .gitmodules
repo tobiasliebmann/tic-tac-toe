@@ -1,0 +1,9 @@
+[submodule "submodules/pygame"]
+	path = submodules/pygame
+	url = https://github.com/pygame/pygame.git
+[submodule "submodules/numpy"]
+	path = submodules/numpy
+	url = https://github.com/numpy/numpy
+[submodule "submodules/cpython"]
+	path = submodules/cpython
+	url = https://github.com/python/cpython/
