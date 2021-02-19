@@ -68,16 +68,19 @@ class State:
         if isinstance(new_state_changed_flag, bool):
             self._state_changed_flag = new_state_changed_flag
         else:
-            raise ValueError("state_changed_flag needs to be a boolean.")
+            raise TypeError("state_changed_flag needs to be a boolean.")
 
     def get_turn(self):
         return self._turn
 
     def set_turn(self, new_turn):
-        if isinstance(new_turn, int) and 0 <= new_turn <= 10:
-            self._turn = new_turn
+        if isinstance(new_turn, int):
+            if 0 <= new_turn <= 10:
+                self._turn = new_turn
+            else:
+                raise ValueError("The turn must be between 0 and 10.")
         else:
-            raise ValueError("turn needs to be a positive integer smaller or equal than 10. ")
+            raise TypeError("The turn needs to be an integer.")
 
     def get_state_matrix(self):
         return self._state_matrix
