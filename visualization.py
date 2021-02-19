@@ -246,14 +246,19 @@ class Graphics:
 
     def init_menu(self):
         """
-
-        :return:
+        Initializes the the visuals for the main menu. The visuals consist of a background, a title and multiple
+        buttons. The buttons are the game button taking you to the game, the how to play button explaining you how to
+        play the game, the credits button which takes you to the credits and the quit button which quits the game.
+        :return: -
         """
         # Draw the background for the menu.
         self.screen.blit(self.menu_background, (0, 0))
+        # Draw the title.
         title = self.title_font.render("Tic-Tac-Toe", True, self.white)
         self.screen.blit(title, (220, 5))
+        # The text_vertical_middle variable is used to vertically align the buttons on the screen.
         text_vertical_middle = 6 * self.screen_height / 11
+        # Draw the buttons and add them to the buttons list.
         self.to_game_button = self.draw_and_return_button("Play game", self.text_color, self.screen_width / 2,
                                                           text_vertical_middle - self.vertical_text_distance)
         self.to_how_to_play_button = self.draw_and_return_button("How to play", self.text_color,
