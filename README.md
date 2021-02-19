@@ -9,7 +9,8 @@ Additional the game has a main menu, a how play sections, a credit and I tried t
 The sources for this game including the used python modules and the images can be found below.
 
 ### Image sources
-These are the sources for the images used in the game.\n
+These are the sources for the images used in the game.
+
 [Main menu background](https://wallpapercave.com/wp/wp2468562.jpg), accessed: 19.02.21, 15:00 o'clock
 [How to play background](https://www.amazon.co.uk/Bilderwelten-Non-woven-wallpaper-Landscape-Format/dp/B0842NGV5N), accessed: 19.02.21, 15:03 o'clock
 [Game over background](https://www.miltonandking.com/product/leopard-wallpaper/), accessed: 19.02.21, 15:05 o'clock
