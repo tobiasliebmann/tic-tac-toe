@@ -1,9 +1,12 @@
 # Tic-tac-toe
-Simple game of tic tac toe I made using the [pygame library](https://www.pygame.org/docs/). The state of the game is represented by a 3x3 matrix which hidden in the background. The markers of the tic tac toe game are represented by a 1, 1 or 0. The marker 1 corresponds to player 1 and a -1 corresponds to player 2. An empty cell in the tic-tac-toe grid is represented by a 0. This is illustrated in the image below. 
+Simple game of tic tac toe I made using the [pygame library](https://www.pygame.org/docs/). Additionally the game has a main menu, a how play section, a credit screen and a nice game over screen. I tried to make the in the Art Deco style of the 20s.
+
+## How the game works
+
+The state of the game is represented by a 3x3 matrix which hidden in the background. The markers of the tic tac toe game are represented by a 1, 1 or 0. The marker 1 corresponds to player 1 and a -1 corresponds to player 2. An empty cell in the tic-tac-toe grid is represented by a 0. This is illustrated in the image below. 
 
 ![Infor for the image](/images/github_image.png)
 
-Additionally the game has a main menu, a how play sections, a credit screen. I tried to make the in the Art Deco style of the 20s.
 
 ## Sources
 
