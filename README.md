@@ -17,7 +17,10 @@ These are the sources for the images used in the game.<br>
 - [Game over background](https://www.miltonandking.com/product/leopard-wallpaper/), accessed: 19.02.21, 15:05 o'clock <br>
 - [Credits backgrund](https://www.photomural.com/artdeco.html#/), accessed: 19.02.21, 15:06 o'clock <br>
 
-####Libary sources
+### Libary sources
 
 These are the sources for the python libraries I used in the game.<br>
-https://github.com/python/cpython
+https://github.com/pygame/pygame <br>
+https://github.com/python/cpython <br>
+https://github.com/numpy/numpy <br>
+
